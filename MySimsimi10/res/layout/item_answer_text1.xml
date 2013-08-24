@@ -3,7 +3,7 @@
     android:id="@+id/layout_answer_text"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="5dp"
+    android:layout_marginBottom="15dp"
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
     android:background="@drawable/answer_bg"

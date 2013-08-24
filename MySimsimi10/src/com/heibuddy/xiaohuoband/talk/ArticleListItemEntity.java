@@ -84,6 +84,8 @@ public class ArticleListItemEntity extends BaseListItemEntity {
 			layoutInflater.inflate(R.layout.item_inner, innerView, true);
 			
 			MsgRecvListItemEntity msgRecvListItemEntity = this.getArticles().get(i);
+			if(i==0)
+				innerView.findViewById(R.id.divider_line).setVisibility(View.INVISIBLE);
 			TextView title = (TextView)innerView.findViewById(R.id.title_inner);
 			title.setText(msgRecvListItemEntity.getTitle());
 			
