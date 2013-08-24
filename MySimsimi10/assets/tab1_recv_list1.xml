@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xml>
+	<ToUserName><![CDATA[toUser_Tab1RecvTable]]></ToUserName>
+	<FromUserName><![CDATA[fromUser_Tab1RecvTable]]></FromUserName>
+	<CreateTime>1376879122</CreateTime>
+	<MsgType><![CDATA[pubArticle]]></MsgType>
+	<ArticleCount>1</ArticleCount>
+	<Articles>
+		<item>
+			<Title><![CDATA[这是应答的表格只有一项]]></Title> 
+			<Description><![CDATA[这是description，点击进入WebView页面：手机QQ]]></Description>
+			<PicUrl><![CDATA[http://t1.baidu.com/it/u=http%3A%2F%2Fsociety.people.com.cn%2FNMediaFile%2F2013%2F0705%2FMAIN201307051900000134945971343.jpg&fm=30]]></PicUrl>
+			<Url><![CDATA[http://sj.qq.com]]></Url>
+		</item>
+	</Articles>
+</xml>

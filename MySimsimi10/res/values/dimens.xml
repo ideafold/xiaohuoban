@@ -1,0 +1,21 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="action_bar_height">49.0dip</dimen>
+    <dimen name="action_bar_title">20.0dip</dimen>
+    <dimen name="action_bar_title_left_padding">13.0dip</dimen>
+    <dimen name="action_bar_title_right_padding">10.0dip</dimen>
+    
+    <dimen name="form_padding">10.0dip</dimen>
+    <dimen name="edittext_glyph_padding_left">40.0dip</dimen>
+    <dimen name="edittext_glyph_padding_right">5.0dip</dimen>
+    <dimen name="edittext_glyph_inset_left">7.0dip</dimen>
+    <dimen name="edittext_glyph_drawable_padding">4.0dip</dimen>    
+    
+    <dimen name="text_size_large_button">16.0sp</dimen>
+    <dimen name="text_size_large_follow_button">14.0sp</dimen>    
+    
+</resources>

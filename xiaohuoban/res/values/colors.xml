@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+   Zirco Browser for Android
+  
+   Copyright (C) 2010 J. Devauchelle and contributors.
+ 
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public License
+   version 3 as published by the Free Software Foundation.
+ 
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+       <color name="white">#FFF</color>
+    <color name="black">#000</color>
+        <color name="green">#090</color>
+    
+ -->
+
+<resources>
+    <color name="red">#900</color>
+    <color name="blue">#009</color>
+	<color name="dialog_title_background">#17170443</color>
+    <color name="black">#ff333333</color>
+    <color name="white">#fff7f7f7</color>
+    <color name="green">#ff66aa00</color>
+    <color name="grey">#ffababab</color>
+    <color name="orange">#ffc66a46</color>
+   	<color name="light_green">#ff66aa01</color>
+    <color name="ade_dark_green">#ff739f32</color>
+    <color name="transparent">#00000000</color>
+    	    
+	<color name="normal_text_color_black">#ff333333</color>
+    <color name="normal_text_color_gray">#ff949494</color>
+    <color name="normal_text_color_light_gray">#ffcacaca</color>
+
+	<color name="sidebar_divider_bg">#15000000</color>
+    <color name="sidebar_account_layout_bg">#44000000</color>	 
+</resources>

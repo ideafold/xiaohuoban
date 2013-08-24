@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:background="@color/gray_background" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:padding="@dimen/form_padding" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <LinearLayout android:orientation="vertical" android:layout_width="0.0dip" android:layout_height="wrap_content" android:layout_weight="1.0">
+                <FrameLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+                    <EditText android:id="@+id/username" android:background="@drawable/input_top_left_edge" android:paddingLeft="@dimen/edittext_glyph_padding_left" android:paddingRight="@dimen/edittext_glyph_padding_right" android:nextFocusDown="@id/password" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/username" android:lines="1" android:singleLine="true" android:capitalize="none" android:inputType="textEmailAddress" android:imeOptions="actionNext" />
+                    <ImageView android:layout_gravity="left|center" android:id="@+id/username_glyph" android:background="@drawable/accounts_glyph_username_default" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/edittext_glyph_inset_left" />
+                    <Spinner android:layout_gravity="right|center" android:id="@+id/fragment_sign_up_username_spinner" android:visibility="gone" android:layout_width="25.0dip" android:layout_height="25.0dip" android:layout_marginRight="10.0dip" />
+                </FrameLayout>
+                <FrameLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+                    <EditText android:id="@+id/password" android:background="@drawable/input_bottom_left_edge" android:paddingLeft="@dimen/edittext_glyph_padding_left" android:paddingRight="@dimen/edittext_glyph_padding_right" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/password" android:lines="1" android:singleLine="true" android:inputType="textPassword" android:imeOptions="actionNext" />
+                    <ImageView android:layout_gravity="left|center" android:id="@+id/password_glyph" android:background="@drawable/accounts_glyph_password_default" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/edittext_glyph_inset_left" />
+                </FrameLayout>
+            </LinearLayout>
+        </LinearLayout>
+        
+        <TextView android:layout_gravity="left" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/edittext_glyph_inset_left" android:layout_marginTop="20.0dip" android:layout_marginBottom="5.0dip" android:text="@string/Profile" style="@style/LoginSubtitle" />
+
+        <FrameLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <AutoCompleteTextView android:id="@+id/email" android:background="@drawable/input_middle" android:paddingLeft="@dimen/edittext_glyph_padding_left" android:paddingRight="@dimen/edittext_glyph_padding_right" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/email" android:lines="1" android:singleLine="true" android:inputType="textEmailAddress" android:imeOptions="actionNext" />
+            <ImageView android:layout_gravity="left|center" android:id="@+id/email_glyph" android:background="@drawable/accounts_glyph_email_default" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/edittext_glyph_inset_left" />
+        </FrameLayout>
+
+        <TextView android:textColorLink="@color/link_color" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginTop="10.0dip" android:layout_marginRight="10.0dip" android:text="@string/email_private" style="@style/SignUpTextStyle" />
+        <TextView android:textColorLink="@color/link_color" android:id="@+id/tos_warning" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginTop="10.0dip" android:layout_marginRight="10.0dip" style="@style/SignUpTextStyle" />
+        <Button android:id="@+id/signUpButton" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dip" android:text="@string/register" style="@style/IgGreenButtonStyleLarge" />
+    </LinearLayout>
+</ScrollView>
