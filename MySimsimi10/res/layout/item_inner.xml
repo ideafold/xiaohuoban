@@ -3,48 +3,69 @@
     android:id="@+id/rl_inner"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/item_inner_bg_selector"
+    android:orientation="vertical"
+    android:paddingBottom="5dp"
     android:paddingLeft="5dp"
     android:paddingRight="5dp"
-    android:paddingTop="2dp"
-    android:paddingBottom="2dp"
-    android:background="@drawable/answer_list_background"
-    android:orientation="vertical" >
+    android:paddingTop="5dp" >
+    
     <ImageView
         android:id="@+id/arrow_inner"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_alignParentRight="true"
-		android:layout_marginRight="3dp"
-		android:layout_marginLeft="2dp"
-		android:background="@drawable/chevron_inverse" 
-		android:layout_centerVertical="true"/>
-    <ImageView
-		android:id="@+id/image_inner"
-		android:layout_width="80.0dip"
-		android:layout_height="80.0dip"
-		android:layout_alignParentLeft="true"
-		android:layout_centerVertical="true"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="3dp"
+        android:background="@drawable/chevron_inverse" />
     
+    <RelativeLayout 
+        android:id="@+id/image_inner_lay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:background="#aaa"
+        android:padding="2dp">
+
+	    <ImageView
+	        android:id="@+id/image_inner"
+	        android:layout_width="80.0dip"
+	        android:layout_height="80.0dip"
+	        android:scaleType="centerCrop"
+	        android:src="@drawable/welcome_photos"
+	        android:layout_alignParentLeft="true"
+	        android:layout_centerVertical="true" />
+    </RelativeLayout>
+
     <LinearLayout
         android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
-    	android:orientation="vertical"
-		android:layout_toRightOf="@+id/image_inner">
-	    <TextView
-	        android:id="@+id/title_inner"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:paddingLeft="2dp"
-	        android:textColor="#000000"
-	        android:textSize="18sp"
-	        android:text="鸡" />
-		<TextView
-	        android:id="@+id/description_inner"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:paddingLeft="2dp"
-	        android:textColor="#000000"
-	        android:textSize="14sp"
-	        android:text="我就是一只傻鸡" />
-	</LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/image_inner_lay"
+        android:layout_toLeftOf="@+id/arrow_inner"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="5dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/title_inner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="2dp"
+            android:text="鸡"
+            android:textColor="#000000"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/description_inner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="2dp"
+            android:layout_marginTop="5dp"
+            android:text="我就是一只傻鸡"
+            android:maxLines="8"
+            android:textColor="#555"
+            android:textSize="14sp" />
+    </LinearLayout>
+
 </RelativeLayout>

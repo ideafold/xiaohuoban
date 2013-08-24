@@ -29,16 +29,15 @@
                 android:id="@+id/fst_tab_buttom"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_alignBottom="@+id/conversation_msg_edt"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="5dip"
-                android:background="#00000000"
+                android:background="@drawable/send_btn_bg_selector"
                 android:paddingBottom="3dip"
                 android:paddingLeft="15dip"
                 android:paddingRight="15dip"
                 android:paddingTop="3dip"
                 android:ellipsize="end"
-                android:src="@drawable/holo_light_send" />
+                android:src="@drawable/send_btn_selector" />
 
             <EditText
                 android:id="@+id/fst_tab_edittext"
