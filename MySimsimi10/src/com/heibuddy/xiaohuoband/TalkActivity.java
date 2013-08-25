@@ -1,5 +1,6 @@
 package com.heibuddy.xiaohuoband;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +17,8 @@ import android.content.IntentFilter;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
@@ -84,7 +87,7 @@ public class TalkActivity extends Activity {
 		mAskButton = (ImageView) findViewById(R.id.fst_tab_buttom);
 		mAskButton.setOnClickListener(mButtonAskListener);
 		
-        mStateHolder = new StateHolder();
+       mStateHolder = new StateHolder();
     }
 
     @Override
@@ -126,7 +129,8 @@ public class TalkActivity extends Activity {
             case PUBTEXT:
             	String query = mEditText.getText().toString();
             	mEditText.setText("");
-            	mStateHolder.startTask(this, TalkQueryType.PUBTEXT, query);
+            	//mStateHolder.startTask(this, TalkQueryType.PUBTEXT, query);
+            	mStateHolder.startTask(this, TalkQueryType.PUBLOCATION, query);
             	break;
             case PUBLOCATION:
             	mStateHolder.startTask(this, TalkQueryType.PUBLOCATION, "");
@@ -215,6 +219,11 @@ public class TalkActivity extends Activity {
 				ButtonProxy bp = (ButtonProxy)msg.obj;
 				mAskButton.setEnabled(bp.mIsEnable);
 			}
+			else if (msg.obj instanceof Exception)
+			{
+				IOException reason = (IOException)msg.obj;
+				NotificationsUtil.ToastReasonForFailure(TalkActivity.this, reason);
+			}
 		}
 	};
 	
@@ -236,7 +245,6 @@ public class TalkActivity extends Activity {
         private String mQuery;
 
         public GetMsgTask(TalkActivity activity, TalkQueryType type, String query) {
-            super();
             mActivity = activity;
             mQueryType = type;
             mQuery = query;
@@ -256,15 +264,20 @@ public class TalkActivity extends Activity {
             		mActivity.updateHandler.sendMessage(msg);
             		break;
             	case PUBLOCATION:
-            		msg = mActivity.updateHandler.obtainMessage(0, new QuestionItemEntity("正在获取周边信息..."));
+            		if (mQuery.isEmpty()){
+            			msg = mActivity.updateHandler.obtainMessage(0, new QuestionItemEntity("正在获取周边信息..."));
+            		}
+            		else{
+            			msg = mActivity.updateHandler.obtainMessage(0, new QuestionItemEntity(mQuery));
+            		}
             		mActivity.updateHandler.sendMessage(msg);
-            		msg = mActivity.updateHandler.obtainMessage(0, new ThinkingItemEntity("稍等哈..."));
+            		msg = mActivity.updateHandler.obtainMessage(0, new ThinkingItemEntity("让我想想..."));
             		mActivity.updateHandler.sendMessage(msg);
             		break;
             	case PUBNEWS:
             		msg =mActivity.updateHandler.obtainMessage(0, new QuestionItemEntity("正在获取新闻..."));
             		mActivity.updateHandler.sendMessage(msg);
-            		msg = mActivity.updateHandler.obtainMessage(0, new ThinkingItemEntity("进行ing..."));
+            		msg = mActivity.updateHandler.obtainMessage(0, new ThinkingItemEntity("让我想想..."));
             		mActivity.updateHandler.sendMessage(msg);
             		break;
             	default:
@@ -345,10 +358,11 @@ public class TalkActivity extends Activity {
             }
             else
             {
+            	if (DEBUG) Log.d(TAG, "Oops, listItemEntity is null");
             	Message msg = mActivity.updateHandler.obtainMessage(0, new SimpleAnswerItemEntity("目测网络有问题啊..."));
             	mActivity.updateHandler.sendMessage(msg);
-            	if (DEBUG) Log.d(TAG, "Oops, listItemEntity is null");
-            	NotificationsUtil.ToastReasonForFailure(mActivity, mReason);
+            	msg = mActivity.updateHandler.obtainMessage(0, mReason);
+            	mActivity.updateHandler.sendMessage(msg);
             }
         }
 
@@ -372,6 +386,7 @@ public class TalkActivity extends Activity {
 
     private static class StateHolder {
         private GetMsgTask mGetMsgTask;
+        
         private ExecutorService mExecutorService;
       
         public StateHolder() {
