@@ -29,7 +29,7 @@ public class MsgRecvListItemEntity {
 		if (picUrl != null && (!picUrl.equals(""))){
 			try {
 				byte[] imgData = NetworkHelper.getImage(picUrl);
-				this.bitmap = BitmapFactory.decodeByteArray(imgData,0,imgData.length);
+				this.bitmap = BitmapFactory.decodeByteArray(imgData, 0, imgData.length);
 			} catch (Exception e) {
 				this.bitmap = null;
 				Log.e(TAG, e.toString());
@@ -59,6 +59,15 @@ public class MsgRecvListItemEntity {
 	
 	public void setPicUrl(String picUrl) {
 		this.picUrl = picUrl;
+		if (picUrl != null && (!picUrl.equals(""))){
+			try {
+				byte[] imgData = NetworkHelper.getImage(this.picUrl);
+				this.bitmap = BitmapFactory.decodeByteArray(imgData, 0, imgData.length);
+			} catch (Exception e) {
+				this.bitmap = null;
+				Log.e(TAG, e.toString());
+			}
+		}
 	}
 	
 	public String getUrl() {
@@ -67,15 +76,6 @@ public class MsgRecvListItemEntity {
 	
 	public void setUrl(String url) {
 		this.url = url;
-		if (picUrl != null && (!picUrl.equals(""))){
-			try {
-				byte[] imgData = NetworkHelper.getImage(picUrl);
-				this.bitmap = BitmapFactory.decodeByteArray(imgData,0,imgData.length);
-			} catch (Exception e) {
-				this.bitmap = null;
-				Log.e(TAG, e.toString());
-			}
-		}
 	}
 	
 	public Bitmap getBitmap() {

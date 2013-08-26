@@ -64,18 +64,18 @@
                 android:paddingLeft="2dp"
                 android:text="鸡"
                 android:textColor="#000000"
-                android:textSize="18sp" />
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/description_inner"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:maxLines="8"
+                android:layout_marginTop="3dp"
+                android:maxLines="5"
                 android:paddingLeft="2dp"
                 android:text="我就是一只傻鸡"
                 android:textColor="#555"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
         </LinearLayout>
     </RelativeLayout>
 

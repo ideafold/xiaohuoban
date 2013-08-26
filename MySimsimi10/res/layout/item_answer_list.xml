@@ -11,6 +11,7 @@
     android:paddingBottom="2dp"
     android:background="@drawable/selector_item_answer_list"
     android:orientation="vertical" >
+    
     <ImageView
         android:id="@+id/arrow_item_answer_list"
 		android:layout_width="wrap_content"

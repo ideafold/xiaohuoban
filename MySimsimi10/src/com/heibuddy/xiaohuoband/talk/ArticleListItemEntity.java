@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -85,7 +86,9 @@ public class ArticleListItemEntity extends BaseListItemEntity {
 			
 			MsgRecvListItemEntity msgRecvListItemEntity = this.getArticles().get(i);
 			if(i==0)
+			{
 				innerView.findViewById(R.id.divider_line).setVisibility(View.INVISIBLE);
+			}
 			TextView title = (TextView)innerView.findViewById(R.id.title_inner);
 			title.setText(msgRecvListItemEntity.getTitle());
 			
@@ -101,12 +104,17 @@ public class ArticleListItemEntity extends BaseListItemEntity {
 			if (msgRecvListItemEntity.getUrl() == null || msgRecvListItemEntity.getUrl().equals(""))
 			{
 				ImageView arrow_inner = (ImageView)innerView.findViewById(R.id.arrow_inner);
-				arrow_inner.setBackground(null);
+				//TODO FIXME!! still display!
+				//arrow_inner.setBackground(null);
+				//arrow_inner.setImageResource(0);	
+				arrow_inner.setImageDrawable(null);
+				if (DEBUG) Log.d(TAG, "arrow_inner will not display!");
 			}
 			else
 			{
 				innerView.setTag(msgRecvListItemEntity.getUrl());
 				innerView.setOnClickListener(onClickListener);
+				if (DEBUG) Log.d(TAG, "arrow_inner will be displaied!");
 			}
 			
 			ll.addView(innerView);
