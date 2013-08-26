@@ -113,7 +113,7 @@ public class TalkActivity extends Activity {
         registerReceiver(mLoggedOutReceiver, new IntentFilter(Xiaohuoband.INTENT_ACTION_LOGGED_OUT));
         registerReceiver(mPasteSuggestionReceiver, new IntentFilter(TalkActivity.INTENT_ACTION_PASTE_SUGGESTION));
         
-       mKeyboardService = new KeyboardService(this);
+        mKeyboardService = new KeyboardService(this);
        
     	mStopDrawable = TalkActivity.this.getResources().getDrawable(R.drawable.stop);
     	mAcAdapter = new AutoCompleteResultsAdapter(this);
@@ -124,12 +124,12 @@ public class TalkActivity extends Activity {
 		mAskButton = (ImageView) findViewById(R.id.fst_tab_buttom);
 		mAskButton.setOnClickListener(mButtonAskListener);
 		
-       mStateHolder = new StateHolder();
+        mStateHolder = new StateHolder();
     }
 
     private void initSearchField(){
     	mSearchField = (TalkAutoCompleteTextView) findViewById(R.id.searchEditText);
-       getSearchField().setAdapter(mAcAdapter);
+        getSearchField().setAdapter(mAcAdapter);
         
         getSearchField().setOnBackButtonPressedEventListener(new BackButtonPressedEventListener() {
 			@Override
@@ -157,7 +157,8 @@ public class TalkActivity extends Activity {
 		});
 
         // This makes a little (X) to clear the search bar.
-        mStopDrawable.setBounds(0, 0, (int)Math.floor(mStopDrawable.getIntrinsicWidth()/1.5), (int)Math.floor(mStopDrawable.getIntrinsicHeight()/1.5));
+        mStopDrawable.setBounds(0, 0, (int)Math.floor(mStopDrawable.getIntrinsicWidth()/1.5), 
+									  (int)Math.floor(mStopDrawable.getIntrinsicHeight()/1.5));
         getSearchField().setCompoundDrawables(null, null, getSearchField().getText().toString().equals("") ? null : mStopDrawable, null);
 
         getSearchField().setOnTouchListener(new OnTouchListener() {
@@ -223,7 +224,6 @@ public class TalkActivity extends Activity {
 	public void clearSearchBar() {
 		getSearchField().setText("");
     	getSearchField().setCompoundDrawables(null, null, null, null);
-//		getSearchField().setBackgroundDrawable(mDuckDuckGoContainer.searchFieldDrawable);
 	}
 	
 	public void setSearchBarText(String text) {
@@ -236,7 +236,8 @@ public class TalkActivity extends Activity {
 	
 	public void reloadAction() {
 		mCleanSearchBar = false;
-       mStopDrawable.setBounds(0, 0, (int) Math.floor(mStopDrawable.getIntrinsicWidth() / 1.5), (int) Math.floor(mStopDrawable.getIntrinsicHeight() / 1.5));
+        mStopDrawable.setBounds(0, 0, (int) Math.floor(mStopDrawable.getIntrinsicWidth() / 1.5), 
+									  (int) Math.floor(mStopDrawable.getIntrinsicHeight() / 1.5));
 		getSearchField().setCompoundDrawables(null, null, getSearchField().getText().toString().equals("") ? null : mStopDrawable, null);
 	}
 	
@@ -246,7 +247,6 @@ public class TalkActivity extends Activity {
 
     	// This makes a little (X) to clear the search bar.
     	getSearchField().setCompoundDrawables(null, null, null, null);
-//    	getSearchField().setBackgroundDrawable(mDuckDuckGoContainer.searchFieldDrawable);
 	}
 	
 	public TalkAutoCompleteTextView getSearchField() {
@@ -272,7 +272,6 @@ public class TalkActivity extends Activity {
             case PUBTEXT:
             	String query = mSearchField.getTrimmedText();
             	clearSearchBar();
-            	//mStateHolder.startTask(this, TalkQueryType.PUBTEXT, query);
             	mStateHolder.startTask(this, TalkQueryType.PUBLOCATION, query);
             	break;
             case PUBLOCATION:
