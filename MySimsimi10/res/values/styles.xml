@@ -45,4 +45,10 @@
         <item name="android:textSize">12.0sp</item>
         <item name="android:textColor">@color/text_signup</item>
     </style>    
+    
+    <style name="AutocompleteResultText" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">#54595f</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">15sp</item>
+    </style>
 </resources>

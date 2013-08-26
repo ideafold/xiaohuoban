@@ -14,19 +14,29 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.HandlerThread;
-import android.os.Looper;
 import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.EditText;
+import android.view.View.OnTouchListener;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.AdapterView.OnItemClickListener;
 
+import com.heibuddy.xiaohuoband.talk.autocomplete.SuggestObject;
+import com.heibuddy.xiaohuoband.talk.autocomplete.BackButtonPressedEventListener;
+import com.heibuddy.xiaohuoband.talk.autocomplete.AutoCompleteResultsAdapter;
+import com.heibuddy.xiaohuoband.talk.autocomplete.TalkAutoCompleteTextView;
+import com.heibuddy.xiaohuoband.talk.autocomplete.KeyboardService;
 import com.heibuddy.xiaohuoban.error.XiaohuobanException;
 import com.heibuddy.xiaohuoban.util.LocationService;
 import com.heibuddy.xiaohuoban.util.NewsService;
@@ -48,27 +58,49 @@ import com.heibuddy.xiaohuoband.R;
 public class TalkActivity extends Activity {
     public static final String TAG = "TalkActivity";
     public static final boolean DEBUG = XiaohuobandSettings.DEBUG;
-
+    
     public static final long MIN_GAP_TO_DISPLAY_NEWS = 3 * 60 * 60 * 1000;	//unit is millisecond
     public static final int MAX_DISPLAY_NEWS_TIME = 3;
     public static final float MIN_DISTANCE_TO_HOME = 1000.00f;
     public static final float MIN_DISTANCE_TO_LAST_LOCATION = 1000.00f;
-    
+	public static final String AUTO_COMPLETE_URL = "http://360island.com:6767/face/suggest/";
+	public static final int SUGGESTION_LIMIT = 5;
+	
     public static enum TalkQueryType {PUBTEXT, PUBLOCATION, PUBNEWS, UNKNOWN};
     private StateHolder mStateHolder = new StateHolder();
     private SearchLocationObserver mSearchLocationObserver = new SearchLocationObserver();
+
+    private KeyboardService mKeyboardService;
     
 	private ListView mTalkView;
 	private List<BaseListItemEntity> mList = null;
 	private ListItemAdapter mListItemAdapter;
+    private TalkAutoCompleteTextView mSearchField = null;
 	private ImageView mAskButton;
-	private EditText mEditText;
-	
+	 
+    private Drawable mStopDrawable;
+    private AutoCompleteResultsAdapter mAcAdapter;
+    public boolean mCleanSearchBar = false;
+    
+    public static final String INTENT_ACTION_PASTE_SUGGESTION = "com.heibuddy.xiaohuoband.intent.action.PASTE_SUGGESTION";
+    
     private BroadcastReceiver mLoggedOutReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (DEBUG) Log.d(TAG, "onReceive: " + intent);
             finish();
+        }
+    };
+    
+   private BroadcastReceiver mPasteSuggestionReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (DEBUG) Log.d(TAG, "onReceive: " + intent);
+            if (intent.hasExtra("query"))
+            {
+            	String query = intent.getStringExtra("query");
+            	getSearchField().pasteQuery(query);
+            }
         }
     };
 
@@ -80,22 +112,101 @@ public class TalkActivity extends Activity {
         setDefaultKeyMode(Activity.DEFAULT_KEYS_SEARCH_LOCAL);
         
         registerReceiver(mLoggedOutReceiver, new IntentFilter(Xiaohuoband.INTENT_ACTION_LOGGED_OUT));
-
+        registerReceiver(mPasteSuggestionReceiver, new IntentFilter(TalkActivity.INTENT_ACTION_PASTE_SUGGESTION));
+        
+       mKeyboardService = new KeyboardService(this);
+       
+    	mStopDrawable = TalkActivity.this.getResources().getDrawable(R.drawable.stop);
+    	mAcAdapter = new AutoCompleteResultsAdapter(this);
+    	
 		setContentView(R.layout.activity_first_tab);
 		listInit();
-		mEditText = (EditText) findViewById(R.id.fst_tab_edittext);
+		initSearchField();
 		mAskButton = (ImageView) findViewById(R.id.fst_tab_buttom);
 		mAskButton.setOnClickListener(mButtonAskListener);
 		
        mStateHolder = new StateHolder();
     }
 
+    private void initSearchField(){
+    	mSearchField = (TalkAutoCompleteTextView) findViewById(R.id.searchEditText);
+       getSearchField().setAdapter(mAcAdapter);
+        
+        getSearchField().setOnBackButtonPressedEventListener(new BackButtonPressedEventListener() {
+			@Override
+			public void onBackButtonPressed() {
+				if(getSearchField().isPopupShowing()){
+                    getSearchField().dismissDropDown();
+				}
+			}
+        });
+
+        getSearchField().setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				//Hide the keyboard and perform a search
+				getSearchField().dismissDropDown();
+					
+				SuggestObject suggestObject = mAcAdapter.getItem(position);
+				if (suggestObject != null) {
+					String text = suggestObject.getPhrase().trim();
+					mKeyboardService.hideKeyboard(getSearchField());
+					clearSearchBar();
+					mStateHolder.startTask(TalkActivity.this, TalkQueryType.PUBLOCATION, text);
+				}
+			}
+		});
+
+        // This makes a little (X) to clear the search bar.
+        mStopDrawable.setBounds(0, 0, (int)Math.floor(mStopDrawable.getIntrinsicWidth()/1.5), (int)Math.floor(mStopDrawable.getIntrinsicHeight()/1.5));
+        getSearchField().setCompoundDrawables(null, null, getSearchField().getText().toString().equals("") ? null : mStopDrawable, null);
+
+        getSearchField().setOnTouchListener(new OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+            	if (event.getAction() == MotionEvent.ACTION_DOWN) {
+    				mCleanSearchBar = true;
+                }
+            	
+                if (getSearchField().getCompoundDrawables()[2] == null) {
+                    return false;
+                }
+                if (event.getAction() != MotionEvent.ACTION_UP) {
+                    return false;
+                }
+                if (event.getX() > getSearchField().getWidth() - getSearchField().getPaddingRight() - mStopDrawable.getIntrinsicWidth()) {
+                	if(getSearchField().getCompoundDrawables()[2] == mStopDrawable) {
+	                	stopAction();
+                	}
+                	else {
+                		reloadAction();
+                	}
+                }
+                return false;
+            }
+
+        });
+
+        getSearchField().addTextChangedListener(new TextWatcher() {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            	getSearchField().setCompoundDrawables(null, null, getSearchField().getText().toString().equals("") ? null : mStopDrawable, null);
+            }
+
+            public void afterTextChanged(Editable arg0) {
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+        });
+
+    }
+    
     @Override
     public void onResume() {
         super.onResume();
         if (DEBUG) Log.d(TAG, "onResume");
+        
         ((Xiaohuoband) getApplication()).requestLocationUpdates(mSearchLocationObserver);
-        tryToCheckAndPullNews();
+//        tryToCheckAndPullNews();
     }
 
     @Override
@@ -109,6 +220,39 @@ public class TalkActivity extends Activity {
         super.onDestroy();
         unregisterReceiver(mLoggedOutReceiver);
     }
+    
+	public void clearSearchBar() {
+		getSearchField().setText("");
+    	getSearchField().setCompoundDrawables(null, null, null, null);
+//		getSearchField().setBackgroundDrawable(mDuckDuckGoContainer.searchFieldDrawable);
+	}
+	
+	public void setSearchBarText(String text) {
+		getSearchField().setFocusable(false);
+		getSearchField().setFocusableInTouchMode(false);
+		getSearchField().setText(text);
+		getSearchField().setFocusable(true);
+		getSearchField().setFocusableInTouchMode(true);
+	}
+	
+	public void reloadAction() {
+		mCleanSearchBar = false;
+       mStopDrawable.setBounds(0, 0, (int) Math.floor(mStopDrawable.getIntrinsicWidth() / 1.5), (int) Math.floor(mStopDrawable.getIntrinsicHeight() / 1.5));
+		getSearchField().setCompoundDrawables(null, null, getSearchField().getText().toString().equals("") ? null : mStopDrawable, null);
+	}
+	
+	private void stopAction() {
+		mCleanSearchBar = true;
+    	getSearchField().setText("");
+
+    	// This makes a little (X) to clear the search bar.
+    	getSearchField().setCompoundDrawables(null, null, null, null);
+//    	getSearchField().setBackgroundDrawable(mDuckDuckGoContainer.searchFieldDrawable);
+	}
+	
+	public TalkAutoCompleteTextView getSearchField() {
+		return mSearchField;
+	}
     
     private void tryToCheckAndPullNews()
     {
@@ -127,8 +271,8 @@ public class TalkActivity extends Activity {
     	switch (type)
         {
             case PUBTEXT:
-            	String query = mEditText.getText().toString();
-            	mEditText.setText("");
+            	String query = mSearchField.getTrimmedText();
+            	clearSearchBar();
             	//mStateHolder.startTask(this, TalkQueryType.PUBTEXT, query);
             	mStateHolder.startTask(this, TalkQueryType.PUBLOCATION, query);
             	break;
@@ -165,7 +309,7 @@ public class TalkActivity extends Activity {
 	private OnClickListener mButtonAskListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			if (!mEditText.getText().toString().equals("")) {
+			if (mSearchField.hasText()) {
 				startTask(TalkQueryType.PUBTEXT);
 			}
 		}
