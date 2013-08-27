@@ -28,6 +28,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="3dp"
+            android:visibility="visible"
             android:background="@drawable/chevron_inverse" />
 
         <RelativeLayout
@@ -45,6 +46,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:scaleType="centerCrop"
+                android:visibility="visible"
                 android:src="@drawable/welcome_photos" />
         </RelativeLayout>
 

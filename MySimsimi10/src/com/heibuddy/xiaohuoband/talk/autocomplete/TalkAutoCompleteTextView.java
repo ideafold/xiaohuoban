@@ -24,8 +24,6 @@ public class TalkAutoCompleteTextView extends AutoCompleteTextView {
 	public void setOnBackButtonPressedEventListener(BackButtonPressedEventListener eventListener) {
 		backButtonPressedEventListener = eventListener;
 	}
-
-
 	
 	public String getTrimmedText(){
 		return getText().toString().trim();

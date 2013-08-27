@@ -85,7 +85,7 @@ public class ArticleListItemEntity extends BaseListItemEntity {
 			layoutInflater.inflate(R.layout.item_inner, innerView, true);
 			
 			MsgRecvListItemEntity msgRecvListItemEntity = this.getArticles().get(i);
-			if(i==0)
+			if (i == 0)
 			{
 				innerView.findViewById(R.id.divider_line).setVisibility(View.INVISIBLE);
 			}
@@ -95,19 +95,24 @@ public class ArticleListItemEntity extends BaseListItemEntity {
 			TextView description = (TextView)innerView.findViewById(R.id.description_inner);
 			description.setText(msgRecvListItemEntity.getDescription());
 			
+			ImageView imageInner = (ImageView)innerView.findViewById(R.id.image_inner);
 			if ((msgRecvListItemEntity.getPicUrl() != null) && !(msgRecvListItemEntity.getPicUrl().equals("")))
 			{
-				ImageView image_inner = (ImageView)innerView.findViewById(R.id.image_inner);
-				image_inner.setImageBitmap(msgRecvListItemEntity.getBitmap());
+				imageInner.setImageBitmap(msgRecvListItemEntity.getBitmap());
+				imageInner.setVisibility(View.VISIBLE);
+			}
+			else{
+				imageInner.setVisibility(View.GONE);
 			}
 			
 			if (msgRecvListItemEntity.getUrl() == null || msgRecvListItemEntity.getUrl().equals(""))
 			{
-				ImageView arrow_inner = (ImageView)innerView.findViewById(R.id.arrow_inner);
+				ImageView arrowInner = (ImageView)innerView.findViewById(R.id.arrow_inner);
 				//TODO FIXME!! still display!
-				//arrow_inner.setBackground(null);
-				//arrow_inner.setImageResource(0);	
-				arrow_inner.setImageDrawable(null);
+				//arrowInner.setBackground(null);
+				//arrowInner.setImageResource(0);	
+				//arrowInner.setImageDrawable(null);
+				arrowInner.setVisibility(View.GONE);
 				if (DEBUG) Log.d(TAG, "arrow_inner will not display!");
 			}
 			else

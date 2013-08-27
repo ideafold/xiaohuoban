@@ -211,7 +211,7 @@ public class TalkActivity extends Activity {
 
     @Override
     public void onPause() {
-        super.onPause();
+    	super.onPause();
         ((Xiaohuoband) getApplication()).removeLocationUpdates(mSearchLocationObserver);
     }
     

@@ -34,11 +34,11 @@ import com.heibuddy.xiaohuoband.Xiaohuoband;
 import com.heibuddy.xiaohuoband.XiaohuobandSettings;
 
 public class AutoCompleteResultsAdapter extends ArrayAdapter<SuggestObject> implements Filterable {
-	private final LayoutInflater inflater;
-	private final Context mContext;
-	
 	protected final String TAG = "AutoCompleteResultsAdapter";
 	public static final boolean DEBUG = XiaohuobandSettings.DEBUG;
+	
+	private final LayoutInflater inflater;
+	private final Context mContext;
 	
 	public List<SuggestObject> mResultList = Collections.synchronizedList(new ArrayList<SuggestObject>());
 	
@@ -56,11 +56,7 @@ public class AutoCompleteResultsAdapter extends ArrayAdapter<SuggestObject> impl
 	@Override
 	public SuggestObject getItem(int index) {
 		SuggestObject suggestObject = getSuggestionObject(index);
-		if (suggestObject != null) {
-			return suggestObject;
-		} else {
-			return null;
-		}
+		return suggestObject;
 	}
 	
 	public SuggestObject getSuggestionObject(int index) {
@@ -106,13 +102,11 @@ public class AutoCompleteResultsAdapter extends ArrayAdapter<SuggestObject> impl
 		return view;
 	}
 	
-	class Holder 
-	{
+	class Holder {
 		final TextView autoCompleteResult;
 		final ImageView plusImage;
 		
-		public Holder(final TextView autoCompleteResult, final ImageView plusImage) 
-		{
+		public Holder(final TextView autoCompleteResult, final ImageView plusImage) {
 			this.autoCompleteResult = autoCompleteResult;
 			this.plusImage = plusImage;
 		}
@@ -145,6 +139,7 @@ public class AutoCompleteResultsAdapter extends ArrayAdapter<SuggestObject> impl
 					}
 					//TODO: Cache the results for later
 				}
+				
 				results.values = newResults;
 				results.count = newResults.size();
 				return results;
@@ -165,16 +160,16 @@ public class AutoCompleteResultsAdapter extends ArrayAdapter<SuggestObject> impl
 			}
 			
 			private JSONArray doGetString(final String query, int limit, final String url) throws IOException{
-		    	SimpleRequest.Builder signupBuilder = SimpleRequest.newBuilder();
+				SimpleRequest.Builder signupBuilder = SimpleRequest.newBuilder();
 		    	signupBuilder.url(url);
 		    	signupBuilder.param("q", query);
 		    	signupBuilder.param("n", String.valueOf(limit));
-		       SimpleRequest nr = signupBuilder.build();
+		    	SimpleRequest nr = signupBuilder.build();
 		       
-		       SimpleClient client = new SimpleClient(Xiaohuoband.getAppContext());
-		       HttpResponse response = client.exec(nr);
-		       SimpleResponse res = new SimpleResponse(response);
-		       return res.getJSONArray();
+		    	SimpleClient client = new SimpleClient(Xiaohuoband.getAppContext());
+		    	HttpResponse response = client.exec(nr);
+		    	SimpleResponse res = new SimpleResponse(response);
+		    	return res.getJSONArray();
 			}
 			
 			private JSONArray getJSONResultForConstraint(CharSequence constraint) {
