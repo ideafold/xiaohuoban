@@ -325,7 +325,7 @@ public class BrowserMainActivity extends SlidingFragmentActivity implements IToo
 		.replace(R.id.menu_frame, new ColorMenuFragment())
 		.commit();
 		
-		sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+		sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 
 //		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }

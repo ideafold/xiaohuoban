@@ -32,20 +32,20 @@ public class MenuDataSource {
     private final List<SlidingMenu> animals = new ArrayList<SlidingMenu>();
 
     public MenuDataSource() {
-        animals.add(new SlidingMenu(R.drawable.aa_avatar_default_circle, "Ğ¡»ï°é£¡", "logo"));
+        animals.add(new SlidingMenu(R.drawable.aa_avatar_default_circle, "å°ä¼™ä¼´ï¼", "logo"));
         
-        animals.add(new SlidingMenu(null, "¾ª´ôÁË", null));
-        animals.add(new SlidingMenu(R.drawable.aa_connect_usb_icon, "ÎÊÒ»ÏÂ", null));
-        animals.add(new SlidingMenu(R.drawable.aa_connect_wifi_icon, "½Ì½ÌTA", null));
-        animals.add(new SlidingMenu(R.drawable.aa_management_apps_icon, "ä¯ÀÀÆ÷", null));
+        animals.add(new SlidingMenu(null, "æƒŠå‘†äº†", null));
+        animals.add(new SlidingMenu(R.drawable.aa_connect_usb_icon, "é—®ä¸€ä¸‹", null));
+        animals.add(new SlidingMenu(R.drawable.aa_connect_wifi_icon, "æ•™æ•™Ta", null));
+        animals.add(new SlidingMenu(R.drawable.aa_management_apps_icon, "æµè§ˆå™¨", null));
         
-        animals.add(new SlidingMenu(null, "³£ÓÃ", null));
-        animals.add(new SlidingMenu(R.drawable.aa_management_pictures_icon, "Ğ¡Ëµ", null));
-        animals.add(new SlidingMenu(R.drawable.aa_management_video_icon, "ÊÓÆµ", null));
-        animals.add(new SlidingMenu(R.drawable.aa_management_music_icon, "ĞÂÎÅ", null));
-        animals.add(new SlidingMenu(R.drawable.aa_management_music_icon, "ÒôÀÖ", null));
-        animals.add(new SlidingMenu(R.drawable.aa_management_video_icon, "Ó¦ÓÃ", null));
-        animals.add(new SlidingMenu(R.drawable.aa_management_video_icon, "µ¼º½", null));
+        animals.add(new SlidingMenu(null, "å¸¸ç”¨", null));
+        animals.add(new SlidingMenu(R.drawable.aa_management_pictures_icon, "å°è¯´", null));
+        animals.add(new SlidingMenu(R.drawable.aa_management_video_icon, "è§†é¢‘", null));
+        animals.add(new SlidingMenu(R.drawable.aa_management_music_icon, "æ–°é—»", null));
+        animals.add(new SlidingMenu(R.drawable.aa_management_music_icon, "éŸ³ä¹", null));
+        animals.add(new SlidingMenu(R.drawable.aa_management_video_icon, "åº”ç”¨", null));
+        animals.add(new SlidingMenu(R.drawable.aa_management_video_icon, "å¯¼èˆª", null));
     }
 
     public List<SlidingMenu> getAnimals() {
