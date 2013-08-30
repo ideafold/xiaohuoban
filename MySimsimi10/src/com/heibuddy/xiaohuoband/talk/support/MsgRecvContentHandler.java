@@ -142,7 +142,7 @@ public class MsgRecvContentHandler extends DefaultHandler {
 		
 		if (mMsgType.equals("pubText") || mMsgType.equals("privateText"))
 		{
-			if (DEBUG) Log.d(TAG, "It's pubText or privateText");
+			Log.d(TAG, "It's pubText or privateText");
 			SimpleAnswerItemEntity sa = (SimpleAnswerItemEntity)entity;
 			sa.setToUserName(mToUserName);
 			sa.setFromUserName(mFromUserName);
@@ -154,7 +154,7 @@ public class MsgRecvContentHandler extends DefaultHandler {
 		}
 		else if (mMsgType.equals("pubArticle") || mMsgType.equals("privateArticle"))
 		{
-			if (DEBUG) Log.d(TAG, "It's pubArticle or privateArticle");
+			Log.d(TAG, "It's pubArticle or privateArticle");
 			ArticleListItemEntity article = (ArticleListItemEntity)entity;
 			article.setToUserName(mToUserName);
 			article.setFromUserName(mFromUserName);
@@ -165,8 +165,15 @@ public class MsgRecvContentHandler extends DefaultHandler {
 		}
 		else if (mMsgType.equals("teachResp"))
 		{
-			Log.e(TAG, "Not implemented yet!");
-			return null;
+			Log.d(TAG, "It's teachResp!");
+			SimpleAnswerItemEntity sa = (SimpleAnswerItemEntity)entity;
+			sa.setToUserName(mToUserName);
+			sa.setFromUserName(mFromUserName);
+			sa.setCreateTime(mCreateTime);
+			sa.setMsgType(mMsgType);
+			sa.setContent(mContent);
+			sa.setUrl(mUrl);
+			return sa;
 		}
 		
 		return null;

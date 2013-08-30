@@ -16,6 +16,7 @@ public class LandingActivity extends Activity {
         Xiaohuoband xd = (Xiaohuoband) getApplication();
         if (xd.isReady())
         {
+        	//Intent intent = new Intent(getApplicationContext(), TalkActivity.class);
         	Intent intent = new Intent(getApplicationContext(), TalkActivity.class);
             startActivity(intent); 
             finish();

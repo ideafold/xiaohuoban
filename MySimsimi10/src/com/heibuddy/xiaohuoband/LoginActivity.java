@@ -51,8 +51,7 @@ public class LoginActivity extends Activity {
         ensureUi();
 
         // Re-task if the request was cancelled.
-        //mLoginTask = (LoginTask) getLastNonConfigurationInstance();
-        mLoginTask = new LoginTask();
+        mLoginTask = (LoginTask) getLastNonConfigurationInstance();
         if (mLoginTask != null && mLoginTask.isCancelled()) {
             Log.d(TAG, "LoginTask previously cancelled, trying again.");
             mLoginTask = new LoginTask().execute();
@@ -211,7 +210,7 @@ public class LoginActivity extends Activity {
                         Toast.LENGTH_LONG).show();
 
                 // Launch the main activity to let the user do anything.
-//                Intent intent = new Intent(LoginActivity.this, TalkActivity.class);
+                //Intent intent = new Intent(LoginActivity.this, TeachActivity.class);
                 Intent intent = new Intent(LoginActivity.this, TalkActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);

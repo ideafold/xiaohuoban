@@ -1,8 +1,6 @@
 package com.heibuddy.xiaohuoband.talk;
 
 import java.io.StringWriter;
-import java.util.Date;
-
 import org.xmlpull.v1.XmlSerializer;
 
 import android.graphics.Bitmap;
@@ -26,7 +24,10 @@ public class TeachMsgSendEntity extends BaseSendEntity
     
     public TeachMsgSendEntity(final String quesiton, final String answer, 
     						  final Bitmap image, boolean isprivate){
-    	
+    	this.mQuestion = quesiton;
+    	this.mAnswer = answer;
+    	this.mImage = image;
+    	this.mIsPrivate = isprivate; 
     }
     
 	public TeachMsgSendEntity(final String toUserName, final String fromUserName,
@@ -128,12 +129,12 @@ public class TeachMsgSendEntity extends BaseSendEntity
             serializer.cdsect(getQuestion()); 
             serializer.endTag("", "Question");  
                 
-            serializer.startTag("", "Ansewr");  
-            serializer.text(getAnswer()); 
+            serializer.startTag("", "Answer");  
+            serializer.cdsect(getAnswer()); 
             serializer.endTag("", "Answer");  
             
             serializer.startTag("", "Image");  
-            serializer.text(""); 
+            serializer.cdsect(""); 
             serializer.endTag("", "Image");  
             
             serializer.startTag("", "UserId");  

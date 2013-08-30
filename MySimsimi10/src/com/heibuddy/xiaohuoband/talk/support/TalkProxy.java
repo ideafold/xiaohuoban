@@ -10,10 +10,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.heibuddy.xiaohuoban.util.NetworkHelper;
 import com.heibuddy.xiaohuoband.XiaohuobandSettings;
@@ -26,7 +23,7 @@ public class TalkProxy {
     
     private static final String TALK_SERVER_URL = "http://42.121.52.246/xiaohuoban/"; 
     
-	public synchronized static BaseListItemEntity getAnswer(BaseSendEntity msg, Context context) throws IOException
+	public synchronized static BaseListItemEntity sendMessage(BaseSendEntity msg, Context context) throws IOException
 	{
 		if (msg == null)
 		{
@@ -40,7 +37,7 @@ public class TalkProxy {
 			Log.e(TAG, "sendXml is null!");
 			return null;
 		}
-		if (DEBUG) Log.d(TAG, "sendXml:" + msg);
+		if (DEBUG) Log.d(TAG, "sendXml:" + sendXml);
 		
 		if (NetworkHelper.isConnected(context) == false){
 			if (DEBUG) Log.d(TAG, "Network unavailable!");

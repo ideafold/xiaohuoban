@@ -31,7 +31,7 @@ public class ListItemEntityFactory
 		}
 		else if (msgType.equals("teachResp"))
 		{
-			Log.e("ListItemEntityFactory", "Not implemented yet!");
+			return ListItemEntityType.SIMPLE_ANSWER_ENTITY;
 		}
 		
 		return ListItemEntityType.UNKNOWN_ENTITY;

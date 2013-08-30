@@ -29,6 +29,9 @@
  	<string name="register_failed_register_toast">Unable to register. Please check your username, email and password.</string> 
  	<string name="register_welcome_toast">Welcome to Xiaohuoban!</string>
  	
+   	<string name="teach_dialog_message">Teaching xiaohuoban!...</string>
+  	<string name="teach_dialog_title">Teach</string>  	
+ 	
     <string name="test_dumpcatcher_product_key">key...</string>  
     <string name="test_dumpcatcher_secret">secret</string>
     <string name="test_dumpcatcher_url">url</string>    

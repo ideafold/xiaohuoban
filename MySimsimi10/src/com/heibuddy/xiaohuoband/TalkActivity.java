@@ -455,7 +455,7 @@ public class TalkActivity extends Activity {
             
             BaseListItemEntity entity = null;
             try {
-            	entity = TalkProxy.getAnswer(msg, mActivity);
+            	entity = TalkProxy.sendMessage(msg, mActivity);
             }catch (Exception e) {
                 Log.d(TAG, "Caught Exception logging in.", e);
                 mReason = e;

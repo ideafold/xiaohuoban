@@ -24,10 +24,10 @@ public class NotificationsUtil {
             Toast.makeText(context, "A surprising new problem has occured. Try again!",
                     Toast.LENGTH_SHORT).show();
         } else if (e instanceof SocketTimeoutException) {
-            Toast.makeText(context, "Foursquare over capacity, server request timed out!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Xiaohuoban over capacity, server request timed out!", Toast.LENGTH_SHORT).show();
             
         } else if (e instanceof SocketException) {
-            Toast.makeText(context, "Foursquare server not responding", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Xiaohuoban server not responding", Toast.LENGTH_SHORT).show();
 
         } else if (e instanceof IOException) {
             Toast.makeText(context, "Network unavailable", Toast.LENGTH_SHORT).show();
@@ -49,7 +49,6 @@ public class NotificationsUtil {
                 toastLength = Toast.LENGTH_LONG;
             }
             Toast.makeText(context, message, toastLength).show();
-
         } else {
             Toast.makeText(context, "A surprising new problem has occured. Try again!",
                     Toast.LENGTH_SHORT).show();
