@@ -87,7 +87,7 @@ public class TalkActivity extends Activity {
     private BroadcastReceiver mLoggedOutReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (DEBUG) Log.d(TAG, "onReceive: " + intent);
+            Log.d(TAG, "onReceive: " + intent);
             finish();
         }
     };
@@ -95,7 +95,7 @@ public class TalkActivity extends Activity {
    private BroadcastReceiver mPasteSuggestionReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (DEBUG) Log.d(TAG, "onReceive: " + intent);
+            Log.d(TAG, "onReceive: " + intent);
             if (intent.hasExtra("query"))
             {
             	String query = intent.getStringExtra("query");
@@ -108,7 +108,7 @@ public class TalkActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        if (DEBUG) Log.d(TAG, "onCreate()");
+        Log.d(TAG, "onCreate()");
         setDefaultKeyMode(Activity.DEFAULT_KEYS_SEARCH_LOCAL);
         
         registerReceiver(mLoggedOutReceiver, new IntentFilter(Xiaohuoband.INTENT_ACTION_LOGGED_OUT));
@@ -204,7 +204,7 @@ public class TalkActivity extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-        if (DEBUG) Log.d(TAG, "onResume");
+        Log.d(TAG, "onResume");
         
         ((Xiaohuoband) getApplication()).requestLocationUpdates(mSearchLocationObserver);
     }
@@ -258,7 +258,7 @@ public class TalkActivity extends Activity {
     {
 		if (NewsService.isNeedingToPullNews(this, MIN_GAP_TO_DISPLAY_NEWS, MAX_DISPLAY_NEWS_TIME) || DEBUG)
 		{
-			if (DEBUG) Log.d(TAG, "Need to pull news");
+			Log.d(TAG, "Need to pull news");
             startTask(TalkQueryType.PUBNEWS);
 		}
     }
@@ -286,18 +286,7 @@ public class TalkActivity extends Activity {
 	{
 		mTalkView = (ListView) findViewById(R.id.list_first_tab);
 		mList = new ArrayList<BaseListItemEntity>();
-		mListItemAdapter = new ListItemAdapter(TalkActivity.this, mList);
-		
-		//这之后可以删
-		mList.add(new QuestionItemEntity("这是提问"));
-		mList.add(new SimpleAnswerItemEntity("这是应答的文本数据，不带链接"));
-		mList.add(new QuestionItemEntity("问"));
-		mList.add(new SimpleAnswerItemEntity("带链接的文本1111111111111111","http://m.baidu.com"));
-		mList.add(new QuestionItemEntity("问"));
-		mList.add(new SimpleAnswerItemEntity("这是应答的文本数据，不带链接"));
-		mTalkView.setAdapter(mListItemAdapter);
-		//这之前可以删除
-		
+		mListItemAdapter = new ListItemAdapter(TalkActivity.this, mList);		
 		mTalkView.setDivider(null);
 	}
 
@@ -390,8 +379,7 @@ public class TalkActivity extends Activity {
         }
         
         protected void onPreExecute() {
-            if (DEBUG) Log.d(TAG, "onPreExecute()");
-            Log.d(TAG, "This guy is running: " + mQueryType.toString());
+            Log.d(TAG, "onPreExecute()" + ", This guy is running: " + mQueryType.toString());
             
             Message msg;
             switch (mQueryType)
@@ -441,7 +429,7 @@ public class TalkActivity extends Activity {
         }
         
         protected BaseListItemEntity doInBackground() {
-            if (DEBUG) Log.d(TAG, "doInBackground()");
+            Log.d(TAG, "doInBackground()");
             
             Xiaohuoband xiaohuoband = (Xiaohuoband) mActivity.getApplication();
 			String fromUserName = xiaohuoband.getUserName();
@@ -469,7 +457,7 @@ public class TalkActivity extends Activity {
             try {
             	entity = TalkProxy.getAnswer(msg, mActivity);
             }catch (Exception e) {
-                if (DEBUG) Log.d(TAG, "Caught Exception logging in.", e);
+                Log.d(TAG, "Caught Exception logging in.", e);
                 mReason = e;
             }
             
@@ -485,13 +473,16 @@ public class TalkActivity extends Activity {
                 {
                 	if (!NewsService.updateLastDisplayTimeToPreferencesDB(mActivity, new Date().getTime()))
                 	{
-                		Log.e(TAG, "updateLastDisplayTimeToPreferencesDB failed!");
+                		if (DEBUG) Log.e(TAG, "updateLastDisplayTimeToPreferencesDB failed!");
                 	}
+                	Log.d(TAG, "updateLastDisplayTimeToPreferencesDB success!");
+                	
                 	int displayedCountToday = NewsService.getTodayNewsDisplayTimesFromPreferencesDB(mActivity);
                 	if (!NewsService.updateTodayNewsDisplayTimesToPreferencesDB(mActivity, displayedCountToday+1))
                 	{
                 		Log.e(TAG, "updateTodayNewsDisplayTimesToPreferencesDB failed!");
                 	}
+                	Log.d(TAG, "updateTodayNewsDisplayTimesToPreferencesDB success!");
                 }
                 else if (mQueryType == TalkQueryType.PUBLOCATION)
                 {
@@ -505,11 +496,12 @@ public class TalkActivity extends Activity {
                     {
                     	Log.e(TAG, "updateLastValidLocationToPreferencesDB failed!");
                     }
+                    Log.d(TAG, "updateLastValidLocationToPreferencesDB success!");
                 }
             }
             else
             {
-            	if (DEBUG) Log.d(TAG, "Oops, listItemEntity is null");
+            	Log.d(TAG, "Oops, listItemEntity is null");
             	Message msg = mActivity.updateHandler.obtainMessage(0, new SimpleAnswerItemEntity("目测网络有问题啊..."));
             	mActivity.updateHandler.sendMessage(msg);
             	msg = mActivity.updateHandler.obtainMessage(0, mReason);

@@ -7,8 +7,13 @@ import android.util.Log;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.heibuddy.xiaohuoband.XiaohuobandSettings;
+
 public class NewsService
 {
+    public static final String TAG = "NewsService";
+    public static final boolean DEBUG = XiaohuobandSettings.DEBUG;
+    
 	public static final String SETTING_INFOS = "setting_infos";
 	public static final String LAST_DISPLAY_NEWS_TIME = "last_display_news_time";
 	public static final String TODAY_DISPLAY_NEWS_TIMES = "today_display_news_times";
@@ -21,6 +26,7 @@ public class NewsService
 		 long lastDisplayTime = getLastDisplayTimeFromPreferencesDB(context);
 		 if (now - lastDisplayTime < minTimeGapToDisplay)
 		 {
+			 if (DEBUG) Log.d(TAG, "now - lastDisplayTime < minTimeGapToDisplay");
 			 return false;
 		 }
 
@@ -29,7 +35,7 @@ public class NewsService
 		 {
 			 if (!updateTodayNewsDisplayTimesToPreferencesDB(context, 0))
 			 {
-				 Log.i("NewsService", "updateTodayNewsDisplayTimesToPreferencesDB failed!");
+				 if (DEBUG) Log.i(TAG, "updateTodayNewsDisplayTimesToPreferencesDB failed!");
 				 return false;
 			 }
 		 }
@@ -37,9 +43,11 @@ public class NewsService
 		 int displayedCountToday = getTodayNewsDisplayTimesFromPreferencesDB(context);
 		 if (displayedCountToday > maxCountEveryDay)
 		 {
+			 if (DEBUG) Log.d(TAG, "displayedCountToday > maxCountEveryDay");
 			 return false;
 		 }
 		 
+		 if (DEBUG) Log.d(TAG, "need to pull news");
 		 return true;
 	}
 	
@@ -75,7 +83,7 @@ public class NewsService
 		SharedPreferences.Editor editor = settings.edit();
 		editor.putInt(TODAY_DISPLAY_NEWS_TIMES, count);
 		return editor.commit();
-	}	
+	}
 	
 	public static int getTodayNewsDisplayTimesFromPreferencesDB(Context context)
 	{

@@ -39,21 +39,22 @@ public class LoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (DEBUG) Log.d(TAG, "onCreate()");
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        setContentView(R.layout.fragment_login);
-        setContentView(R.layout.login_main);
+        Log.d(TAG, "onCreate()");
         
         Preferences.logoutUser(((Xiaohuoband) getApplication()).getXiaohuoban(), 
                 				PreferenceManager.getDefaultSharedPreferences(this).edit());
+ 
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.login_main);
         
         // Set up the UI.
         ensureUi();
 
         // Re-task if the request was cancelled.
-        mLoginTask = (LoginTask) getLastNonConfigurationInstance();
+        //mLoginTask = (LoginTask) getLastNonConfigurationInstance();
+        mLoginTask = new LoginTask();
         if (mLoginTask != null && mLoginTask.isCancelled()) {
-            if (DEBUG) Log.d(TAG, "LoginTask previously cancelled, trying again.");
+            Log.d(TAG, "LoginTask previously cancelled, trying again.");
             mLoginTask = new LoginTask().execute();
         }
     }
@@ -72,10 +73,11 @@ public class LoginActivity extends Activity {
 
     @Override
     public Object onRetainNonConfigurationInstance() {
-        if (DEBUG) Log.d(TAG, "onRetainNonConfigurationInstance()");
+        Log.d(TAG, "onRetainNonConfigurationInstance()");
         if (mLoginTask != null) {
             mLoginTask.cancel(true);
         }
+        
         return mLoginTask;
     }
 
@@ -88,6 +90,7 @@ public class LoginActivity extends Activity {
             dialog.setCancelable(true);
             mProgressDialog = dialog;
         }
+        
         mProgressDialog.show();
         return mProgressDialog;
     }
@@ -162,13 +165,13 @@ public class LoginActivity extends Activity {
 
         @Override
         protected void onPreExecute() {
-            if (DEBUG) Log.d(TAG, "onPreExecute()");
+        	Log.d(TAG, "onPreExecute()");
             showProgressDialog();
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            if (DEBUG) Log.d(TAG, "doInBackground()");
+            Log.d(TAG, "doInBackground()");
             
             SharedPreferences prefs = PreferenceManager
                     .getDefaultSharedPreferences(LoginActivity.this);
@@ -185,14 +188,14 @@ public class LoginActivity extends Activity {
                 // Make sure prefs makes a round trip.
                 String userId = Preferences.getUserId(prefs);
                 if (TextUtils.isEmpty(userId)) {
-                    if (DEBUG) Log.d(TAG, "Preference store calls failed");
+                    Log.d(TAG, "Preference store calls failed");
                     throw new XiaohuobanException(getResources().getString(
                             R.string.login_failed_login_toast));
                 }
 
                 return loggedIn;
             } catch (Exception e) {
-                if (DEBUG) Log.d(TAG, "Caught Exception logging in.", e);
+                Log.d(TAG, "Caught Exception logging in.", e);
                 mReason = e;
                 Preferences.logoutUser(xiaohuoban, editor);
                 return false;
@@ -201,7 +204,7 @@ public class LoginActivity extends Activity {
 
         @Override
         protected void onPostExecute(Boolean loggedIn) {
-            if (DEBUG) Log.d(TAG, "onPostExecute(): " + loggedIn);
+            Log.d(TAG, "onPostExecute(): " + loggedIn);
             if (loggedIn) {
                 sendBroadcast(new Intent(Xiaohuoband.INTENT_ACTION_LOGGED_IN));
                 Toast.makeText(LoginActivity.this, getString(R.string.login_welcome_toast),

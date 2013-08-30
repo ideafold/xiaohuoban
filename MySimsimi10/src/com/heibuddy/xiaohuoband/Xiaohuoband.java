@@ -69,15 +69,13 @@ public class Xiaohuoband extends Application {
         // Check if this is a new install by seeing if our preference file exists on disk.
         mIsFirstRun = checkIfIsFirstRun();
 
-        // Setup Prefs (to load dumpcatcher)
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         
         // Setup some defaults in our preferences if not set yet.
         Preferences.setupDefaults(mPrefs, getResources());
  
         // Sometimes we want the application to do some work on behalf of the
-        // Activity. Lets do that
-        // asynchronously.
+        // Activity. Lets do that asynchronously.
         mTaskThread = new HandlerThread(TAG + "-AsyncThread");
         mTaskThread.start();
         mTaskHandler = new TaskHandler(mTaskThread.getLooper());
@@ -184,7 +182,7 @@ public class Xiaohuoband extends Application {
         // credentials.
         mXiaohuoban = new Xiaohuoban();
 
-        if (XiaohuobandSettings.DEBUG) Log.d(TAG, "loadCredentials()");
+        Log.d(TAG, "loadCredentials()");
         String username = mPrefs.getString(Preferences.PREFERENCE_USER_NAME, null);
         String password = mPrefs.getString(Preferences.PREFERENCE_USER_PASSWORD, null);
         mXiaohuoban.setCredentials(username, password);
@@ -195,24 +193,10 @@ public class Xiaohuoband extends Application {
         }
     }
 
-    /**
-     * Provides static access to a Xiaohuoban instance. This instance is
-     * initiated without user credentials.
-     * 
-     * @param context the context to use when constructing the Xiaohuoban
-     *            instance
-     * @return the Xiaohuoban instace
-     */
     public static Xiaohuoban createXiaohuoban(Context context) {
         return new Xiaohuoban();
     }
 
-    /**
-     * Constructs the version string of the application.
-     * 
-     * @param context the context to use for getting package info
-     * @return the versions string of the application
-     */
     private static String getVersionString(Context context) {
         // Get a version string for the app.
         try {
@@ -232,10 +216,10 @@ public class Xiaohuoband extends Application {
         // trying to access the
         // resource managers.
         try {
-            if (DEBUG) Log.d(TAG, "Attempting to load RemoteResourceManager(cache)");
+            Log.d(TAG, "Attempting to load RemoteResourceManager(cache)");
             mRemoteResourceManager = new RemoteResourceManager("cache");
         } catch (IllegalStateException e) {
-            if (DEBUG) Log.d(TAG, "Falling back to NullDiskCache for RemoteResourceManager");
+            Log.d(TAG, "Falling back to NullDiskCache for RemoteResourceManager");
             mRemoteResourceManager = new RemoteResourceManager(new NullDiskCache());
         }
     }
@@ -256,9 +240,7 @@ public class Xiaohuoband extends Application {
     private class MediaCardStateBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (DEBUG)
-                Log
-                        .d(TAG, "Media state changed, reloading resource managers:"
+            Log.d(TAG, "Media state changed, reloading resource managers:"
                                 + intent.getAction());
             if (Intent.ACTION_MEDIA_UNMOUNTED.equals(intent.getAction())) {
                 getRemoteResourceManager().shutdown();

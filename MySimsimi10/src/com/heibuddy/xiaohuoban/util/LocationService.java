@@ -10,6 +10,9 @@ import android.content.SharedPreferences;
 
 public class LocationService
 {
+    public static final String TAG = "LocationService";
+    public static final boolean DEBUG = XiaohuobandSettings.DEBUG;
+    
 	public enum  HuobanLocationType {RESIDENT, LAST_VALID} 
 	 
 	public static final String SETTING_INFOS = "setting_infos";
@@ -25,7 +28,7 @@ public class LocationService
 		distance = getDistanceToResidentLocation(context, location);
 		if (distance < minDistanceToHome)
 		{
-			if (XiaohuobandSettings.DEBUG)
+			if (DEBUG)
         	{
 				Log.i("LocationService", String.valueOf(distance) + "is less than minDistanceToHome: "
 						+ String.valueOf(minDistanceToHome));
@@ -36,7 +39,7 @@ public class LocationService
 		distance =  getDistanceToLastValidLocation(context, location);
 		if (distance < minDistanceToLastLocation)
 		{
-			if (XiaohuobandSettings.DEBUG)
+			if (DEBUG)
         	{
 				Log.i("LocationService", String.valueOf(distance) + "is less than minDistanceToLastLocation: " 
 							+ String.valueOf(minDistanceToLastLocation));
@@ -44,10 +47,10 @@ public class LocationService
 			return false;
 		}
 		
-		if (XiaohuobandSettings.DEBUG)
-    	{
-			Log.i("LocationService", "It does go far away!");
-    	}
+		if (DEBUG)
+		{
+			Log.i(TAG, "It does go far away!");
+		}
 		
 		return true;
 	}
@@ -114,7 +117,7 @@ public class LocationService
         Location location = mgr.getLastKnownLocation("network");
         if (lon < 0.01f && lat < 0.01f)
         {
-        	if (XiaohuobandSettings.DEBUG)
+        	if (DEBUG)
         	{
         		Log.i("LocationService", "old locaiton had lon < 0.01f && lat < 0.01f, using current user network location");
         	}
@@ -124,7 +127,7 @@ public class LocationService
 		location.setLongitude(lon);
 		location.setLatitude(lat);
 		
-		Log.i("LocationService getLocationFromPreferencesDB return: ", location.toString());
+		if (DEBUG) Log.i("LocationService getLocationFromPreferencesDB return: ", location.toString());
 		return location;
 	}
 }

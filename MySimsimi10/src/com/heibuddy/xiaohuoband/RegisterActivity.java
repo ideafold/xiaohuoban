@@ -41,21 +41,20 @@ public class RegisterActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (DEBUG) Log.d(TAG, "onCreate()");
+        Log.d(TAG, "onCreate()");
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        setContentView(R.layout.fragment_register);
-        setContentView(R.layout.register_main);
         
         Preferences.logoutUser(((Xiaohuoband) getApplication()).getXiaohuoban(), 
                 				PreferenceManager.getDefaultSharedPreferences(this).edit());
         
+        setContentView(R.layout.register_main);
         // Set up the UI.
         ensureUi();
 
         // Re-task if the request was cancelled.
         mRegisterTask = (RegisterTask) getLastNonConfigurationInstance();
         if (mRegisterTask != null && mRegisterTask.isCancelled()) {
-            if (DEBUG) Log.d(TAG, "RegisterTask previously cancelled, trying again.");
+            Log.d(TAG, "RegisterTask previously cancelled, trying again.");
             mRegisterTask = new RegisterTask().execute();
         }
     }
@@ -74,7 +73,7 @@ public class RegisterActivity extends Activity {
 
     @Override
     public Object onRetainNonConfigurationInstance() {
-        if (DEBUG) Log.d(TAG, "onRetainNonConfigurationInstance()");
+        Log.d(TAG, "onRetainNonConfigurationInstance()");
         if (mRegisterTask != null) {
             mRegisterTask.cancel(true);
         }
@@ -168,13 +167,13 @@ public class RegisterActivity extends Activity {
 
         @Override
         protected void onPreExecute() {
-            if (DEBUG) Log.d(TAG, "onPreExecute()");
+            Log.d(TAG, "onPreExecute()");
             showProgressDialog();
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            if (DEBUG) Log.d(TAG, "doInBackground()");
+            Log.d(TAG, "doInBackground()");
             
             SharedPreferences prefs = PreferenceManager
                     .getDefaultSharedPreferences(RegisterActivity.this);
@@ -186,20 +185,19 @@ public class RegisterActivity extends Activity {
                 String username = mUsernameEditText.getText().toString();
                 String password = mPasswordEditText.getText().toString();
                 String email = mEmailEditText.getText().toString();
-
                 boolean registered = Preferences.registerUser(xiaohuoban, username, email, password, editor);
 
                 // Make sure prefs makes a round trip.
                 String userId = Preferences.getUserId(prefs);
                 if (TextUtils.isEmpty(userId)) {
-                    if (DEBUG) Log.d(TAG, "Preference store calls failed");
+                    Log.d(TAG, "Preference store calls failed");
                     throw new XiaohuobanException(getResources().getString(
                             R.string.register_failed_register_toast));
                 }
 
                 return registered;
             } catch (Exception e) {
-                if (DEBUG) Log.d(TAG, "Caught Exception registering.", e);
+                Log.d(TAG, "Caught Exception registering.", e);
                 mReason = e;
                 Preferences.logoutUser(xiaohuoban, editor);
                 return false;
@@ -208,7 +206,7 @@ public class RegisterActivity extends Activity {
 
         @Override
         protected void onPostExecute(Boolean registered) {
-            if (DEBUG) Log.d(TAG, "onPostExecute(): " + registered);
+            Log.d(TAG, "onPostExecute(): " + registered);
             if (registered) {
                 sendBroadcast(new Intent(Xiaohuoband.INTENT_ACTION_LOGGED_IN));
                 Toast.makeText(RegisterActivity.this, getString(R.string.register_welcome_toast),
