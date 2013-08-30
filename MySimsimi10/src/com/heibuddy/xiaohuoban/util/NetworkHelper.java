@@ -108,7 +108,7 @@ public final class NetworkHelper {
   
     	final HttpParams httpParams = new BasicHttpParams();
     	HttpConnectionParams.setConnectionTimeout(httpParams, 10*1000);
-        while (i < 3)
+        while (i < 2)
         {
             try 
             {
@@ -133,7 +133,7 @@ public final class NetworkHelper {
             } catch (Exception e) { 
             	if (DEBUG) Log.d(TAG, e.toString());
                 i++;  
-                if (i == 3) {
+                if (i == 2) {
                     Log.e("HttpUtils sendRequestFromHttpClient", "not connect:" + url + "\n" + e.getMessage());  
                 }  
             } finally {  
@@ -163,7 +163,7 @@ public final class NetworkHelper {
 		URL url = new URL(path);
         int i = 0;
         
-        while (i < 3)
+        while (i < 1)
         {
             try 
             {
@@ -183,7 +183,7 @@ public final class NetworkHelper {
         		return outStream.toByteArray();           	
             } catch (Exception e) {  
                 i++;  
-                if (i == 3) {  
+                if (i == 1) {  
                     Log.e("HttpUtils getImage", "Fail to fetch url:" + url + "\n" + e.getMessage());  
                 }  
             } finally {  

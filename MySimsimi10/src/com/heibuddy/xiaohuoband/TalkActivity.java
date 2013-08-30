@@ -58,14 +58,15 @@ public class TalkActivity extends Activity {
     public static final String TAG = "TalkActivity";
     public static final boolean DEBUG = XiaohuobandSettings.DEBUG;
     
-    public static final long MIN_GAP_TO_DISPLAY_NEWS = 3 * 60 * 60 * 1000;	//unit is millisecond
-    public static final int MAX_DISPLAY_NEWS_TIME = 3;
-    public static final float MIN_DISTANCE_TO_HOME = 1000.00f;
-    public static final float MIN_DISTANCE_TO_LAST_LOCATION = 1000.00f;
-	public static final String AUTO_COMPLETE_URL = "http://360island.com:6767/face/suggest/";
+    public static final long MIN_GAP_TO_DISPLAY_NEWS = 1 * 180 * 60 * 1000;	//unit is millisecond
+    public static final int MAX_DISPLAY_NEWS_TIME = 4;
+    public static final float MIN_DISTANCE_TO_HOME = 3000.00f;
+    public static final float MIN_DISTANCE_TO_LAST_LOCATION = 3000.00f;
+	public static final String AUTO_COMPLETE_URL = "http://42.96.142.194:6767/face/suggest/";
 	public static final int SUGGESTION_LIMIT = 5;
 	
     public static enum TalkQueryType {PUBTEXT, PUBLOCATION, PUBNEWS, UNKNOWN};
+    
     private StateHolder mStateHolder = new StateHolder();
     private SearchLocationObserver mSearchLocationObserver = new SearchLocationObserver();
 
@@ -125,6 +126,7 @@ public class TalkActivity extends Activity {
 		mAskButton.setOnClickListener(mButtonAskListener);
 		
         mStateHolder = new StateHolder();
+        tryToCheckAndPullNews();
     }
 
     private void initSearchField(){
@@ -197,7 +199,6 @@ public class TalkActivity extends Activity {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
         });
-
     }
     
     @Override
@@ -206,7 +207,6 @@ public class TalkActivity extends Activity {
         if (DEBUG) Log.d(TAG, "onResume");
         
         ((Xiaohuoband) getApplication()).requestLocationUpdates(mSearchLocationObserver);
-//        tryToCheckAndPullNews();
     }
 
     @Override
@@ -219,6 +219,7 @@ public class TalkActivity extends Activity {
     public void onDestroy() {
         super.onDestroy();
         unregisterReceiver(mLoggedOutReceiver);
+        unregisterReceiver(mPasteSuggestionReceiver);
     }
     
 	public void clearSearchBar() {
@@ -259,10 +260,6 @@ public class TalkActivity extends Activity {
 		{
 			if (DEBUG) Log.d(TAG, "Need to pull news");
             startTask(TalkQueryType.PUBNEWS);
-		}
-		else
-		{
-			if (DEBUG) Log.d(TAG, "No need to pull news");
 		}
     }
     
@@ -486,7 +483,6 @@ public class TalkActivity extends Activity {
                 mActivity.updateHandler.sendMessage(mActivity.updateHandler.obtainMessage(0, entity));
                 if (mQueryType == TalkQueryType.PUBNEWS)
                 {
-                	if (DEBUG) return;
                 	if (!NewsService.updateLastDisplayTimeToPreferencesDB(mActivity, new Date().getTime()))
                 	{
                 		Log.e(TAG, "updateLastDisplayTimeToPreferencesDB failed!");
@@ -496,6 +492,19 @@ public class TalkActivity extends Activity {
                 	{
                 		Log.e(TAG, "updateTodayNewsDisplayTimesToPreferencesDB failed!");
                 	}
+                }
+                else if (mQueryType == TalkQueryType.PUBLOCATION)
+                {
+                	Location location = ((Xiaohuoband) mActivity.getApplication()).getLastKnownLocation();
+                    if (location == null) {
+                    	mReason = new XiaohuobanException("No location!");
+                    	return;
+                    }
+                    
+                    if (!LocationService.updateLastValidLocationToPreferencesDB(mActivity, location))
+                    {
+                    	Log.e(TAG, "updateLastValidLocationToPreferencesDB failed!");
+                    }
                 }
             }
             else

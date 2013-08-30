@@ -35,6 +35,8 @@ public class MsgRecvContentHandler extends DefaultHandler {
 	private String mTagName;
 	private boolean mInItem;
 
+	private StringBuffer mBuffer = new StringBuffer();
+	
 	@Override
 	public void startDocument() throws SAXException {
 		if (DEBUG) Log.d(TAG, "````````begin````````");
@@ -66,66 +68,68 @@ public class MsgRecvContentHandler extends DefaultHandler {
 	public void endElement(String namespaceURI, String localName, String qName)
 							throws SAXException {
 		if (DEBUG) Log.d(TAG, "````````endElement````````" + localName);
-		mTagName = "";
-		if (localName.equals("item")) {
-			mArticles.add(mItemEntity);
-			mInItem = false;
-		}
-	}
-	
-	@Override
-	public void characters(char[] ch, int start, int length)
-							throws SAXException {
-		String str = new String(ch, start, length);
-		
-		if (DEBUG) Log.d(TAG, "````````characters````````" + mTagName + ": " + str);
 		
 		if (mTagName.equals("ToUserName"))
 		{
-			this.mToUserName = str;
+			this.mToUserName = mBuffer.toString().trim();
 		}
 		else if (mTagName.equals("FromUserName"))
 		{
-			this.mFromUserName = str;
+			this.mFromUserName = mBuffer.toString().trim();
 		}
 		else if (mTagName.equals("CreateTime")) 
 		{
-			long recvSecond = Long.parseLong(str);
+			String str = mBuffer.toString();
+			long recvSecond = Long.parseLong(str.trim());
 			Date dt = new Date(recvSecond * 1000);
 			this.mCreateTime = dt;
 		} 
 		else if (mTagName.equals("MsgType"))
 		{
-			this.mMsgType = str;
+			this.mMsgType = mBuffer.toString().trim();
 		}
 		else if (mTagName.equals("ArticleCount"))
 		{
-			this.mArticleCount = Integer.parseInt(str);
+			String str = mBuffer.toString();
+			this.mArticleCount = Integer.parseInt(str.trim());
 		}
 		else if (mInItem && mTagName.equals("Title"))
 		{
-			mItemEntity.setTitle(str);
+			mItemEntity.setTitle(mBuffer.toString().trim());
 		}
 		else if (mInItem && mTagName.equals("Description"))
 		{
-			mItemEntity.setDescription(str);
+			mItemEntity.setDescription(mBuffer.toString().trim());
 		}
 		else if (mInItem && mTagName.equals("PicUrl"))
 		{
-			mItemEntity.setPicUrl(str);
+			mItemEntity.setPicUrl(mBuffer.toString().trim());
 		}
 		else if (mInItem && mTagName.equals("Url"))
 		{
-			mItemEntity.setUrl(str);
+			mItemEntity.setUrl(mBuffer.toString().trim());
 		}
 		else if (mTagName.equals("Content"))
 		{
-			this.mContent = str;
+			this.mContent = mBuffer.toString().trim();
 		}
 		else if ((!mInItem) && mTagName.equals("Url"))
 		{
-			this.mUrl = str;
+			this.mUrl = mBuffer.toString().trim();
 		}
+		
+		mTagName = "";
+		if (localName.equals("item")) {
+			mArticles.add(mItemEntity);
+			mInItem = false;
+		}
+		mBuffer = new StringBuffer();
+	}
+	
+	@Override
+	public void characters(char[] ch, int start, int length)
+							throws SAXException {
+		mBuffer.append(new String(ch, start, length));
 	}
 
 	public BaseListItemEntity getData(){

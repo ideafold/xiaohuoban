@@ -1,5 +1,6 @@
 package com.heibuddy.xiaohuoband.talk;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -45,7 +46,25 @@ public class ArticleListItemEntity extends BaseListItemEntity {
 	}
 
 	public void setArticles(List<MsgRecvListItemEntity> articles) {
-		this.mArticles = articles;
+		//here, we make the item with image having higher priority!
+		
+		mArticles = new ArrayList<MsgRecvListItemEntity>();
+		ArrayList<MsgRecvListItemEntity> notHavingImageItems = new ArrayList<MsgRecvListItemEntity>();
+		
+		for (int i = 0; i < articles.size(); i++)
+		{
+			MsgRecvListItemEntity item = articles.get(i);
+			if (item.getBitmap() != null)
+			{
+				mArticles.add(item);
+			}
+			else
+			{
+				notHavingImageItems.add(item);
+			}
+		}
+		
+		mArticles.addAll(notHavingImageItems);
 	}
 	
 	@Override
@@ -96,7 +115,7 @@ public class ArticleListItemEntity extends BaseListItemEntity {
 			description.setText(msgRecvListItemEntity.getDescription());
 			
 			ImageView imageInner = (ImageView)innerView.findViewById(R.id.image_inner);
-			if ((msgRecvListItemEntity.getPicUrl() != null) && !(msgRecvListItemEntity.getPicUrl().equals("")))
+			if (msgRecvListItemEntity.getBitmap() != null)
 			{
 				imageInner.setImageBitmap(msgRecvListItemEntity.getBitmap());
 				imageInner.setVisibility(View.VISIBLE);
@@ -108,18 +127,12 @@ public class ArticleListItemEntity extends BaseListItemEntity {
 			if (msgRecvListItemEntity.getUrl() == null || msgRecvListItemEntity.getUrl().equals(""))
 			{
 				ImageView arrowInner = (ImageView)innerView.findViewById(R.id.arrow_inner);
-				//TODO FIXME!! still display!
-				//arrowInner.setBackground(null);
-				//arrowInner.setImageResource(0);	
-				//arrowInner.setImageDrawable(null);
 				arrowInner.setVisibility(View.GONE);
-				if (DEBUG) Log.d(TAG, "arrow_inner will not display!");
 			}
 			else
 			{
 				innerView.setTag(msgRecvListItemEntity.getUrl());
 				innerView.setOnClickListener(onClickListener);
-				if (DEBUG) Log.d(TAG, "arrow_inner will be displaied!");
 			}
 			
 			ll.addView(innerView);
