@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <Button
+        android:id="@+id/toolbar_button_sign_up"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/input_top"
+        android:drawableLeft="@drawable/accounts_glyph_register"
+        android:drawablePadding="5.0dip"
+        android:drawableRight="@drawable/list_tappable"
+        android:gravity="left|center"
+        android:text="@string/register"
+        android:textSize="16.0sp" />
+
+    <Button
+        android:id="@+id/toolbar_button_login"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/input_bottom"
+        android:drawableLeft="@drawable/accounts_glyph_username_default"
+        android:drawablePadding="5.0dip"
+        android:drawableRight="@drawable/list_tappable"
+        android:gravity="left|center"
+        android:text="@string/sign_in"
+        android:textSize="16.0sp" />
+
+</merge>

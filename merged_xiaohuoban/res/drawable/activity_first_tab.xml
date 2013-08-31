@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_first_tab"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <ListView
+        android:id="@+id/list_first_tab"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="55dp"
+        android:stackFromBottom="true" 
+        android:listSelector="@color/transparent"
+        android:background="@color/white"
+        android:transcriptMode="alwaysScroll" >
+    </ListView>
+    <LinearLayout
+        android:id="@+id/fst_tab_bottom"
+    	android:layout_width="fill_parent"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="7dp"
+        android:background="@color/lightskyblue">
+	    <RelativeLayout 
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:orientation="horizontal">
+	        <EditText 
+	            android:id="@+id/fst_tab_edittext"
+	            android:layout_width="fill_parent"
+	        	android:layout_height="fill_parent"
+	        	android:paddingLeft="5dp"
+	        	android:paddingRight="5dp"
+	        	android:text=""
+	        	android:layout_toLeftOf="@+id/fst_tab_buttom"
+	        	android:background="@drawable/border_edittext"/>
+	        <ImageView
+	            android:id="@+id/fst_tab_buttom"
+	            android:layout_width="wrap_content"
+	        	android:layout_height="fill_parent"
+	        	android:layout_alignParentRight="true"
+	        	android:background="@drawable/enter"/>
+	            
+	    </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

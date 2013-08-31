@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+   Zirco Browser for Android
+  
+   Copyright (C) 2010 - 2011 J. Devauchelle and contributors.
+ 
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public License
+   version 3 as published by the Free Software Foundation.
+ 
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+ -->
+
+<resources>
+
+	<style name="Bookmarks">
+	</style>
+
+	<style name="Bookmarks.Title">
+		<item name="android:textSize">16sp</item>
+		<item name="android:textColor">@android:color/white</item>
+	</style>
+	
+	<style name="History">
+	</style>
+	
+	<style name="History.Title">
+		<item name="android:textSize">16sp</item>
+		<item name="android:textColor">@android:color/white</item>
+	</style>
+	
+	<style name="History.Url">
+		<item name="android:textSize">12sp</item>
+		<item name="android:textColor">#888888</item>
+	</style>
+
+	    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+
+    
+    <style name="IgGreenButtonStyleLarge">
+        <item name="android:textSize">@dimen/text_size_large_button</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:background">@drawable/button_large_green_bg</item>
+        <item name="android:shadowColor">@color/text_shadow_green_button</item>
+        <item name="android:shadowDx">0.0</item>
+        <item name="android:shadowDy">1.0</item>
+        <item name="android:shadowRadius">0.1</item>
+    </style>
+
+    <style name="LoginSubtitle">
+        <item name="android:textSize">16.0sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#ff333333</item>
+        <item name="android:shadowColor">#ffffffff</item>
+        <item name="android:shadowDx">0.0</item>
+        <item name="android:shadowDy">1.0</item>
+        <item name="android:shadowRadius">1.0</item>
+    </style>   
+     
+    <style name="SignUpTextStyle">
+        <item name="android:textSize">12.0sp</item>
+        <item name="android:textColor">@color/text_signup</item>
+    </style>    
+    
+    <style name="AutocompleteResultText" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">#54595f</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+	
+</resources>
