@@ -29,7 +29,7 @@ import com.heibuddy.xiaohuoban.http.SimpleResponse;
 import com.heibuddy.xiaohuoband.talk.autocomplete.SuggestObject;
 
 import com.heibuddy.R;
-import com.heibuddy.xiaohuoband.TalkFragment;
+import com.heibuddy.xiaohuoband.TalkActivity;
 import com.heibuddy.xiaohuoband.Xiaohuoband;
 import com.heibuddy.xiaohuoband.XiaohuobandSettings;
 
@@ -90,7 +90,7 @@ public class AutoCompleteResultsAdapter extends ArrayAdapter<SuggestObject> impl
 					String phrase = suggestion.getPhrase();
 					if(phrase != null) {
 						//BusProvider.getInstance().post(new SuggestionPasteEvent(suggestion.getPhrase()));
-						Intent intent = new Intent(TalkFragment.INTENT_ACTION_PASTE_SUGGESTION);
+						Intent intent = new Intent(TalkActivity.INTENT_ACTION_PASTE_SUGGESTION);
 						intent.putExtra("query", phrase);
 						mContext.sendBroadcast(intent);
 						if (DEBUG) Log.d(TAG, "query paste intent: " + phrase);
@@ -177,7 +177,7 @@ public class AutoCompleteResultsAdapter extends ArrayAdapter<SuggestObject> impl
 				try {
 					String query = constraint.toString();
 					if (DEBUG) Log.d(TAG, "query is : " + query);
-					json = doGetString(query, TalkFragment.SUGGESTION_LIMIT, TalkFragment.AUTO_COMPLETE_URL);
+					json = doGetString(query, TalkActivity.SUGGESTION_LIMIT, TalkActivity.AUTO_COMPLETE_URL);
 					if (DEBUG) Log.d(TAG, "return suggestion is: " + json.toString());
 				} catch (Exception e) {
 					Log.e(TAG, e.getMessage(), e);

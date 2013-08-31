@@ -96,6 +96,18 @@ public class TeachActivity extends SlidingFragmentActivity {
         ((Xiaohuoband) getApplication()).removeLocationUpdates();
     }
 
+    @Override
+	protected void onNewIntent(Intent intent) {
+    	SlidingMenu sm = getSlidingMenu();
+        if (sm != null &&sm.isMenuShowing())
+        {
+            sm.toggle();
+        }
+		
+		setIntent(intent);
+		super.onNewIntent(intent);
+	}
+    
     private ProgressDialog showProgressDialog() {
         if (mProgressDialog == null) {
             ProgressDialog dialog = new ProgressDialog(this);

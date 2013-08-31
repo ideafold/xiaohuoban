@@ -62,10 +62,6 @@ public class SlidingMenuFragment extends ListFragment {
 			cls = TalkActivity.class;
 			intent = new Intent(getActivity(), cls);
 			getActivity().startActivity(intent);
-			//if (getActivity() instanceof TalkActivity) {
-			//	TalkActivity ta = (TalkActivity) getActivity();
-			//	ta.show();
-			//}
 			break;
 		case 3:
 			//teach activity
