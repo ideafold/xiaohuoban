@@ -131,16 +131,6 @@ public class TeachActivity extends SlidingFragmentActivity {
     }
 
     private void ensureUi() {
-    	final ImageView backButton = (ImageView) findViewById(R.id.action_bar_button_back);
-    	backButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(TeachActivity.this, LandingActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            }
-        });
-        
         final Button teachButton = (Button) findViewById(R.id.teach_fragment_teach_button);
         teachButton.setOnClickListener(new OnClickListener() {
             @Override

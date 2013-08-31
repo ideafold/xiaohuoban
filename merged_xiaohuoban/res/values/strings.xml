@@ -13,13 +13,6 @@
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
-       <string name=""></string>
-    <string name=""></string>    
-    <string name=""></string>
-    <string name=""></string>
-    <string name=""></string>
-    <string name=""></string>
-    <string name=""></string>
  -->
 
 <resources>
@@ -33,6 +26,10 @@
     <string name="password">Password</string>    
    	<string name="forgot_password">Forgot Password?</string>
     <string name="forget_account">Forget this account</string>
+    
+    <string name="question">问题, 表白...</string>
+    <string name="answer">答案...</string>  
+    <string name="do_teach">提交</string> 
     
     <string name="photo">photo</string>  
     <string name="Profile">Profile</string>
