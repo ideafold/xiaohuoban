@@ -259,12 +259,8 @@ public class BrowserMainActivity extends SlidingFragmentActivity implements IToo
         if (i.getData() != null) {
         	
         	SlidingMenu sm = getSlidingMenu();
-        	if (sm != null)
-        	{
-        		if (sm.isMenuShowing())
-        		{
-        			sm.toggle();
-        		}
+        	if (sm != null && sm.isMenuShowing()){
+        		sm.toggle();
         	}
         	else
         	{
@@ -368,15 +364,8 @@ public class BrowserMainActivity extends SlidingFragmentActivity implements IToo
 	protected void onNewIntent(Intent intent) {
     	if (intent.getData() != null) {
     		SlidingMenu sm = getSlidingMenu();
-        	if (sm != null)
-        	{
-        		if (sm.isMenuShowing())
-        		{
-            		if (sm.isMenuShowing())
-            		{
-            			sm.toggle();
-            		}
-        		}
+        	if (sm != null && sm.isMenuShowing()){
+            		sm.toggle();
         	}
     		addTab(false);
     		navigateToUrl(intent.getDataString());
