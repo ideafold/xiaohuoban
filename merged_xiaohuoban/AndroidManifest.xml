@@ -38,6 +38,7 @@
         <activity
             android:name="com.heibuddy.xiaohuoband.TeachActivity"
             android:launchMode="singleTask"
+            android:theme="@android:style/Theme.Holo.Light"
             android:screenOrientation="portrait">
         </activity>
         

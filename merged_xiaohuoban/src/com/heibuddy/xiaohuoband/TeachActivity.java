@@ -54,7 +54,6 @@ public class TeachActivity extends SlidingFragmentActivity {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate()");
         
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.teach_main);
         
         // Set up the UI.
@@ -66,6 +65,9 @@ public class TeachActivity extends SlidingFragmentActivity {
 		sm.setShadowDrawable(R.drawable.shadow);
 		sm.setBehindOffsetRes(R.dimen.slidingmenu_offset);
 		sm.setFadeDegree(0.35f);
+		
+		this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		this.getSupportActionBar().setTitle(R.string.teach_label);
 		
 		// set the Behind View
 		setBehindContentView(R.layout.menu_frame);
@@ -173,6 +175,18 @@ public class TeachActivity extends SlidingFragmentActivity {
         mQuestionEditText.addTextChangedListener(fieldValidatorTextWatcher);
         mAnswerEditText.addTextChangedListener(fieldValidatorTextWatcher);
     }
+    
+    @Override
+	public boolean onOptionsItemSelected(
+			com.actionbarsherlock.view.MenuItem item) {
+		// TODO Auto-generated method stub
+    	switch (item.getItemId()) {
+    	case android.R.id.home:
+    		getSlidingMenu().toggle();
+    		return true;
+    	}
+		return super.onOptionsItemSelected(item);
+	}
 
     private class TeachTask extends AsyncTask<Void, Void, BaseListItemEntity> {
         private static final String TAG = "TeachTask";

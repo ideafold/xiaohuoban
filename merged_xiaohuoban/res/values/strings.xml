@@ -29,7 +29,8 @@
     
     <string name="question">问题, 表白...</string>
     <string name="answer">答案...</string>  
-    <string name="do_teach">提交</string> 
+    <string name="do_teach">提交</string>
+    <string name="teach_label">教教Ta</string> 
     
     <string name="photo">photo</string>  
     <string name="Profile">Profile</string>
