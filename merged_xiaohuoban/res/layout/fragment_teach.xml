@@ -1,18 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout android:layout_width="fill_parent" 
-    		 android:layout_height="fill_parent"
-    		 android:background="@color/gray_background"
-  			 xmlns:android="http://schemas.android.com/apk/res/android">
-        
-        <LinearLayout android:orientation="vertical" android:id="@+id/fragment_login_container" android:padding="@dimen/form_padding" android:layout_width="fill_parent" android:layout_height="wrap_content">
-            <LinearLayout android:orientation="vertical" android:id="@+id/login_username_input_group" android:layout_width="fill_parent" android:layout_height="wrap_content">
-            	<EditText android:id="@+id/question" android:background="@drawable/input_top" android:paddingLeft="2.0dip" android:paddingRight="2.0dip" android:nextFocusDown="@+id/answer" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/question" android:lines="2"/>
-            </LinearLayout>
-            
-            <LinearLayout android:gravity="center" android:layout_gravity="center" android:orientation="vertical" android:id="@+id/login_static_username_group" android:paddingTop="15.0dip" android:paddingBottom="15.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" />
-            <FrameLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
-                <EditText android:id="@+id/answer" android:background="@drawable/input_bottom" android:paddingLeft="2.0dip" android:paddingRight="2.0dip" android:nextFocusUp="@+id/question" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/answer" android:lines="4" android:imeOptions="actionDone" />
-            </FrameLayout>
-            <Button android:id="@+id/teach_fragment_teach_button" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="25.0dip" android:text="@string/do_teach" style="@style/IgGreenButtonStyleLarge" />
-        </LinearLayout>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/gray_background" >
+
+    <LinearLayout
+        android:id="@+id/fragment_login_container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/form_padding" >
+
+            <EditText
+                android:id="@+id/question"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/all_input"
+                android:hint="@string/question"
+                android:maxLines="3"
+                android:textSize="15sp"
+                android:layout_marginTop="10dp"
+                android:nextFocusDown="@+id/answer"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:paddingLeft="10.0dip"
+                android:paddingRight="10.0dip" />
+
+            <EditText
+                android:id="@+id/answer"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/all_input"
+                android:hint="@string/answer"
+                android:imeOptions="actionDone"
+                android:lines="4"
+                android:textSize="15sp"
+                android:gravity="top"
+                android:layout_marginTop="20dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:nextFocusUp="@+id/question"
+                android:paddingLeft="10.0dip"
+                android:paddingRight="10.0dip" />
+
+        <Button
+            android:id="@+id/teach_fragment_teach_button"
+            style="@style/IgGreenButtonStyleLarge"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25.0dip"
+            android:text="@string/do_teach" />
+    </LinearLayout>
+
 </FrameLayout>
