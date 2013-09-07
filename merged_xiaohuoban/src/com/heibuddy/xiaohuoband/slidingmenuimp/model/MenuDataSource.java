@@ -11,6 +11,7 @@ public class MenuDataSource {
 
     public MenuDataSource() {
         animals.add(new SlidingMenu(R.drawable.aa_avatar_default_circle, "小伙伴！", "logo"));
+        //animals.add(new SlidingMenu(null, "小伙伴！", "logo"));
         
         animals.add(new SlidingMenu(null, "惊呆了", null));
         animals.add(new SlidingMenu(R.drawable.aa_management_answer_icon, "问一下", null));

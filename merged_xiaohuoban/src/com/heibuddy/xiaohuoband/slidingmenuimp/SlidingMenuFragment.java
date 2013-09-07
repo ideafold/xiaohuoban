@@ -21,7 +21,6 @@ import com.heibuddy.xiaohuoband.slidingmenuimp.model.MenuDataSource;
 import com.heibuddy.xiaohuoband.slidingmenuimp.model.SlidingMenu;
 import com.heibuddy.xiaohuoband.slidingmenuimp.row.CategoryRow;
 import com.heibuddy.xiaohuoband.slidingmenuimp.row.ImageRow;
-import com.heibuddy.xiaohuoband.slidingmenuimp.row.LogoRow;
 import com.heibuddy.xiaohuoband.slidingmenuimp.row.Row;
 import com.heibuddy.xiaohuoband.slidingmenuimp.row.RowType;
 
@@ -44,12 +43,6 @@ public class SlidingMenuFragment extends ListFragment {
 		setListAdapter(new AnimalAdapter(new MenuDataSource().getAnimals()));	
 	}
 
-	@Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        setListAdapter(new AnimalAdapter(new MenuDataSource().getAnimals()));
-	}
-	
 	@Override
 	public void onListItemClick(ListView lv, View v, int position, long id) {
 		Class<?> cls = null;
@@ -112,6 +105,7 @@ public class SlidingMenuFragment extends ListFragment {
             for (SlidingMenu animal : animals) {
             	if (animal.getDescription() != null) {
             		rows.add(new ImageRow(LayoutInflater.from(getActivity()), animal, true));
+            		//rows.add(new CategoryRow(LayoutInflater.from(getActivity()), animal));
             		continue;
             	}
             	

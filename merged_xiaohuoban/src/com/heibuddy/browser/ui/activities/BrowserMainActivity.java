@@ -1775,11 +1775,6 @@ public class BrowserMainActivity extends SlidingFragmentActivity implements IToo
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
-		// customize the SlidingMenu
-		SlidingMenu sm = getSlidingMenu();
-    	if (sm != null && sm.isMenuShowing()){
-        		sm.toggle();
-    	}
 	}
 	
 	@Override
