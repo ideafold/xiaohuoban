@@ -98,7 +98,7 @@ public class ListItemAdapter implements ListAdapter{
 		@Override
 		public void onClick(View v) {
 			Intent intent = new Intent(context, BrowserMainActivity.class);
-			//intent.putExtra("url", (String)v.getTag());
+			intent.putExtra("url", (String)v.getTag());
 			intent.setData(Uri.parse((String)v.getTag()));
 			context.startActivity(intent);
 		}

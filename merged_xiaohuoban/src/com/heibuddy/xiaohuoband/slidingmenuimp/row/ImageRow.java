@@ -35,10 +35,12 @@ import com.heibuddy.R;
 public class ImageRow implements Row {
     private final SlidingMenu menuItem;
     private final LayoutInflater inflater;
+    private boolean isLogo;
 
-    public ImageRow(LayoutInflater inflater, SlidingMenu menuItem) {
+    public ImageRow(LayoutInflater inflater, SlidingMenu menuItem, boolean isLogo) {
         this.menuItem = menuItem;
         this.inflater = inflater;
+        this.isLogo = isLogo;
     }
 
     public View getView(View convertView) {
@@ -46,7 +48,13 @@ public class ImageRow implements Row {
         View view;
         //we have a don't have a converView so we'll have to create a new one
         if (convertView == null) {
-            ViewGroup viewGroup = (ViewGroup)inflater.inflate(R.layout.aa_sidebar_home_category_layout, null);
+            ViewGroup viewGroup = null;
+            if (isLogo){
+            	viewGroup = (ViewGroup)inflater.inflate(R.layout.aa_sidebar_account_layout, null);
+            }
+            else{
+            	viewGroup = (ViewGroup)inflater.inflate(R.layout.aa_sidebar_home_category_layout, null);
+            }
 
             //use the view holder pattern to save of already looked up subviews
             holder = new ViewHolder((ImageView)viewGroup.findViewById(R.id.category_icon),

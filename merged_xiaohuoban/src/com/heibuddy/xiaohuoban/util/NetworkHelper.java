@@ -169,7 +169,7 @@ public final class NetworkHelper {
             {
             	conn = (HttpURLConnection)url.openConnection();
             	conn.setRequestMethod("GET");
-            	conn.setConnectTimeout(10*1000);
+            	conn.setConnectTimeout(6*1000);
             	inStream = conn.getInputStream();
             	
             	outStream = new ByteArrayOutputStream();

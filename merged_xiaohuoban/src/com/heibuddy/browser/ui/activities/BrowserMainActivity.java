@@ -262,10 +262,7 @@ public class BrowserMainActivity extends SlidingFragmentActivity implements IToo
         	if (sm != null && sm.isMenuShowing()){
         		sm.toggle();
         	}
-        	else
-        	{
-        		Log.d("isMenuShowing", "sm is null!!");
-        	}
+
         	// App first launch from another app.
         	addTab(false);
         	navigateToUrl(i.getDataString());
@@ -372,7 +369,6 @@ public class BrowserMainActivity extends SlidingFragmentActivity implements IToo
     	}
 		
 		setIntent(intent);
-		
 		super.onNewIntent(intent);
 	}        
     
@@ -1779,6 +1775,11 @@ public class BrowserMainActivity extends SlidingFragmentActivity implements IToo
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
+		// customize the SlidingMenu
+		SlidingMenu sm = getSlidingMenu();
+    	if (sm != null && sm.isMenuShowing()){
+        		sm.toggle();
+    	}
 	}
 	
 	@Override

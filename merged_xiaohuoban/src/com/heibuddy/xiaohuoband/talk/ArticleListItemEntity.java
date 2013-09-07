@@ -110,18 +110,26 @@ public class ArticleListItemEntity extends BaseListItemEntity {
 			}
 			TextView title = (TextView)innerView.findViewById(R.id.title_inner);
 			title.setText(msgRecvListItemEntity.getTitle());
+			Log.d(TAG, msgRecvListItemEntity.getTitle());
 			
 			TextView description = (TextView)innerView.findViewById(R.id.description_inner);
-			description.setText(msgRecvListItemEntity.getDescription());
+			if (msgRecvListItemEntity.getBitmap() != null){
+				description.setText(msgRecvListItemEntity.getDescription());
+			}
+			else{
+				description.setText(msgRecvListItemEntity.getDescription());
+			}
 			
 			ImageView imageInner = (ImageView)innerView.findViewById(R.id.image_inner);
 			if (msgRecvListItemEntity.getBitmap() != null)
 			{
 				imageInner.setImageBitmap(msgRecvListItemEntity.getBitmap());
 				imageInner.setVisibility(View.VISIBLE);
+				Log.d(TAG, "image VISIBLE: " + msgRecvListItemEntity.getPicUrl());
 			}
 			else{
 				imageInner.setVisibility(View.GONE);
+				Log.d(TAG, "image GONE");
 			}
 			
 			if (msgRecvListItemEntity.getUrl() == null || msgRecvListItemEntity.getUrl().equals(""))

@@ -42,6 +42,7 @@ import com.heibuddy.xiaohuoban.util.LocationService;
 import com.heibuddy.xiaohuoban.util.NewsService;
 import com.heibuddy.xiaohuoban.util.NotificationsUtil;
 import com.heibuddy.xiaohuoband.location.BestLocationListener;
+import com.heibuddy.xiaohuoband.talk.ArticleListItemEntity;
 import com.heibuddy.xiaohuoband.talk.BaseSendEntity;
 import com.heibuddy.xiaohuoband.talk.ListItemAdapter;
 import com.heibuddy.xiaohuoband.talk.BaseListItemEntity;
@@ -372,6 +373,9 @@ public class TalkActivity extends SlidingFragmentActivity {
 					}
 				}
 				addRecvMsg(listItemEntity);
+				if (listItemEntity instanceof ArticleListItemEntity){
+					mTalkView.setSelection(mList.size()-2);
+				}
 			}
 			else if (msg.obj instanceof ButtonProxy) 
 			{

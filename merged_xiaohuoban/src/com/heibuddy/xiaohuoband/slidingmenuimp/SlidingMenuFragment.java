@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +26,13 @@ import com.heibuddy.xiaohuoband.slidingmenuimp.row.Row;
 import com.heibuddy.xiaohuoband.slidingmenuimp.row.RowType;
 
 public class SlidingMenuFragment extends ListFragment {
-
+	final static String BAIDU_URL = "http://www.baidu.com/";
+	final static String NEWS_URL = "http://info.3g.qq.com/";
+	final static String MUSIC_URL = "http://m.ttpod.com/";
+	final static String VIDEO_URL = "http://www.youku.com/";
+	final static String TAOBAO_URL = "http://r.m.taobao.com/m3?p=mm_46101947_4214102_13744538&c=1043";
+	final static String NOVEL_URL = "http://duokoo.baidu.com/xs/";
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.list, null);
@@ -35,21 +41,19 @@ public class SlidingMenuFragment extends ListFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-/*		
-		String[] colors = getResources().getStringArray(R.array.color_names);
-		ArrayAdapter<String> colorAdapter = new ArrayAdapter<String>(getActivity(), 
-				android.R.layout.simple_list_item_1, android.R.id.text1, colors);
-*/		
 		setListAdapter(new AnimalAdapter(new MenuDataSource().getAnimals()));	
-		//setListAdapter(colorAdapter);
 	}
 
 	@Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        setListAdapter(new AnimalAdapter(new MenuDataSource().getAnimals()));
+	}
+	
+	@Override
 	public void onListItemClick(ListView lv, View v, int position, long id) {
-		Fragment newContent = null;
 		Class<?> cls = null;
 		Intent intent = null;
-		String url;
 		switch (position) {
 		case 0:
 			//account item, so do nothing
@@ -70,31 +74,33 @@ public class SlidingMenuFragment extends ListFragment {
 			getActivity().startActivity(intent);
 			break;
 		case 4:
-			//browser activity
-			url = "http://www.google.com.hk";
-			UrlUtils.goToTheUrl(getActivity(), url);
-			break;
-		case 5:
 			//general use category, do nothing
 			break;
+		case 5:
+			//baidu activity
+			UrlUtils.goToTheUrl(getActivity(), BAIDU_URL);
+			break;
 		case 6:
-			url = "http://www.36kr.com";
-			UrlUtils.goToTheUrl(getActivity(), url);
+			//news activity
+			UrlUtils.goToTheUrl(getActivity(), NEWS_URL);
+			break;
+		case 7:
+			//music
+			UrlUtils.goToTheUrl(getActivity(), MUSIC_URL);
+			break;
+		case 8:
+			//video
+			UrlUtils.goToTheUrl(getActivity(), VIDEO_URL);
+			break;
+		case 9:
+			//taobao
+			UrlUtils.goToTheUrl(getActivity(), TAOBAO_URL);
 			break;
 		default:
-			url = "http://www.douban.com/";
-			UrlUtils.goToTheUrl(getActivity(), url);
+			//novel
+			UrlUtils.goToTheUrl(getActivity(), NOVEL_URL);
 			break;
 		}
-		
-		if (newContent != null)
-			switchFragment(newContent);
-	}
-
-	// the meat of switching the above fragment
-	private void switchFragment(Fragment fragment) {
-		if (getActivity() == null)
-			return;
 	}
 
     private class AnimalAdapter extends BaseAdapter {
@@ -105,14 +111,15 @@ public class SlidingMenuFragment extends ListFragment {
 
             for (SlidingMenu animal : animals) {
             	if (animal.getDescription() != null) {
-            		rows.add(new LogoRow(LayoutInflater.from(getActivity()), animal));
+            		rows.add(new ImageRow(LayoutInflater.from(getActivity()), animal, true));
             		continue;
             	}
             	
                 //if it has an image, use an ImageRow
                 if (animal.getImageId() != null) {
-                    rows.add(new ImageRow(LayoutInflater.from(getActivity()), animal));
-                } else {//otherwise use a DescriptionRow
+                    rows.add(new ImageRow(LayoutInflater.from(getActivity()), animal, false));
+                } else {
+                	//otherwise use a DescriptionRow
                     rows.add(new CategoryRow(LayoutInflater.from(getActivity()), animal));
                 }
             }
