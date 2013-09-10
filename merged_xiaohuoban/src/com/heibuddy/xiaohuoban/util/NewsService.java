@@ -33,6 +33,7 @@ public class NewsService
 		 //check whether now it is a new day, if yes, set the displayedCountToday to zero
 		 if (!isSameDay(now, lastDisplayTime))
 		 {
+			 Log.d(TAG, "Is not the same day!");
 			 if (!updateTodayNewsDisplayTimesToPreferencesDB(context, 0))
 			 {
 				 if (DEBUG) Log.i(TAG, "updateTodayNewsDisplayTimesToPreferencesDB failed!");
@@ -41,6 +42,7 @@ public class NewsService
 		 }
 		 
 		 int displayedCountToday = getTodayNewsDisplayTimesFromPreferencesDB(context);
+		 Log.d(TAG, "displayedCountToday is " + String.valueOf(displayedCountToday));
 		 if (displayedCountToday > maxCountEveryDay)
 		 {
 			 if (DEBUG) Log.d(TAG, "displayedCountToday > maxCountEveryDay");
