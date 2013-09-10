@@ -127,7 +127,8 @@ public final class NetworkHelper {
                     while ((line = reader.readLine()) != null) {  
                         sb.append(line);  
                         sb.append("\r\n");  
-                    }  
+                    }
+                    
                     return sb.toString();  
                 }  
             } catch (Exception e) { 
