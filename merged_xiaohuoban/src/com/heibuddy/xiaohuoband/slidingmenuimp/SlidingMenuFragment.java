@@ -25,12 +25,13 @@ import com.heibuddy.xiaohuoband.slidingmenuimp.row.Row;
 import com.heibuddy.xiaohuoband.slidingmenuimp.row.RowType;
 
 public class SlidingMenuFragment extends ListFragment {
-	final static String BAIDU_URL = "http://www.baidu.com/";
-	final static String NEWS_URL = "http://info.3g.qq.com/";
-	final static String MUSIC_URL = "http://m.ttpod.com/";
-	final static String VIDEO_URL = "http://www.youku.com/";
-	final static String TAOBAO_URL = "http://r.m.taobao.com/m3?p=mm_46101947_4214102_13744538&c=1043";
-	final static String NOVEL_URL = "http://duokoo.baidu.com/xs/";
+	final static String SITE_PREFIX = "http://www.360island.com:8080/sp/";
+	final static String BAIDU_URL = SITE_PREFIX + "navigation/";
+	final static String NEWS_URL = SITE_PREFIX + "news/";
+	final static String MUSIC_URL = SITE_PREFIX + "music/";
+	final static String VIDEO_URL = SITE_PREFIX + "video/";
+	final static String TAOBAO_URL = SITE_PREFIX + "shopping/";
+	final static String NOVEL_URL = SITE_PREFIX + "novel/";
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

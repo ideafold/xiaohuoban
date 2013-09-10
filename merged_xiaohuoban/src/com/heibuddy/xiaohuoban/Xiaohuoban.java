@@ -19,8 +19,8 @@ public class Xiaohuoban
 {
     private static final String TAG = Xiaohuoban.class.getSimpleName();
     
-	private static final String SIGNUP_URL = "http://360island.com:8080/signup/";
-	private static final String SIGNIN_URL = "http://360island.com:8080/signin/";
+	private static final String SIGNUP_URL = "http://www.360island.com:8080/signup/";
+	private static final String SIGNIN_URL = "http://www.360island.com:8080/signin/";
 	
     private String mUserName;
     private String mPassword;
@@ -66,8 +66,8 @@ public class Xiaohuoban
         	if (doCheckStatus(root))
         	{
         		//TODO
-//        		result[0] = getUserId(root);
-        		result[0] = "10";
+        		result[0] = getUserId(root);
+//        		result[0] = "10";
         		return result;
         	}
         	else
@@ -109,8 +109,8 @@ public class Xiaohuoban
         	if (doCheckStatus(root))
         	{
         		//TODO
-        		//result[0] = getUserId(root);
-        		result[0] = "10";
+        		result[0] = getUserId(root);
+        		//result[0] = "10";
         		return result;
         	}
         	else

@@ -56,15 +56,15 @@ public class Preferences {
 
         String[] signInResult = null;
         try {
-//        	signInResult = xiaohuoban.verifyUser(username, password);
-        	signInResult = new String[2];
-        	signInResult[0] = "10";
+        	signInResult = xiaohuoban.verifyUser(username, password);
+//        	signInResult = new String[2];
+//        	signInResult[0] = "10";
         	if (signInResult == null || signInResult[0] == "-1")
         	{
         		throw new XiaohuobanException(signInResult[1]);
         	}
-//		} catch (IOException e) {
-        } catch (Exception e) {	
+		} catch (IOException e) {
+//        } catch (Exception e) {	
 			if (DEBUG) Log.d(Preferences.TAG, "verifyUser occur io exception!.");
 			throw new XiaohuobanException("verifyUser occur io exception!.");
 		}
@@ -86,15 +86,15 @@ public class Preferences {
 
         String[] signInResult = null;
         try {
-        	//signInResult = xiaohuoban.signupUser(username, email, password);
-        	signInResult = new String[2];
-        	signInResult[0] = "10";
+        	signInResult = xiaohuoban.signupUser(username, email, password);
+        	//signInResult = new String[2];
+        	//signInResult[0] = "10";
         	if (signInResult == null || signInResult[0] == "-1")
         	{
         		throw new XiaohuobanException(signInResult[1]);
         	}
-		//} catch (IOException e) {
-        } catch (Exception e) {	
+		} catch (IOException e) {
+        //} catch (Exception e) {	
 			if (DEBUG) Log.d(Preferences.TAG, "signupUser occur io exception!.");
 			throw new XiaohuobanException("signupUser occur io exception!.");
 		}

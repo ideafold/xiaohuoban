@@ -63,10 +63,10 @@ public class TalkActivity extends SlidingFragmentActivity {
     public static final boolean DEBUG = XiaohuobandSettings.DEBUG;
     
     public static final long MIN_GAP_TO_DISPLAY_NEWS = 1 * 180 * 60 * 1000;	//unit is millisecond
-    public static final int MAX_DISPLAY_NEWS_TIME = 4;
+    public static final int MAX_DISPLAY_NEWS_TIME = 5;
     public static final float MIN_DISTANCE_TO_HOME = 3000.00f;
     public static final float MIN_DISTANCE_TO_LAST_LOCATION = 3000.00f;
-	public static final String AUTO_COMPLETE_URL = "http://42.96.142.194:6767/face/suggest/";
+	public static final String AUTO_COMPLETE_URL = "http://www.360island.com:6767/face/suggest/";
 	public static final int SUGGESTION_LIMIT = 5;
 	
     public static enum TalkQueryType {PUBTEXT, PUBLOCATION, PUBNEWS, UNKNOWN};
@@ -145,8 +145,13 @@ public class TalkActivity extends SlidingFragmentActivity {
 		
 		sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 		
+		
+		if (DEBUG && !NewsService.updateTodayNewsDisplayTimesToPreferencesDB(this, 0))
+    	{
+    		Log.e(TAG, "updateTodayNewsDisplayTimesToPreferencesDB failed!");
+    	}
+		
         mStateHolder = new StateHolder();
-        tryToCheckAndPullNews();
     }
 
     private void initSearchField(){
@@ -227,6 +232,7 @@ public class TalkActivity extends SlidingFragmentActivity {
         Log.d(TAG, "onResume");
         
         ((Xiaohuoband) getApplication()).requestLocationUpdates(mSearchLocationObserver);
+        tryToCheckAndPullNews();
     }
 
     @Override
@@ -288,7 +294,7 @@ public class TalkActivity extends SlidingFragmentActivity {
     
     private void tryToCheckAndPullNews()
     {
-		if (NewsService.isNeedingToPullNews(this, MIN_GAP_TO_DISPLAY_NEWS, MAX_DISPLAY_NEWS_TIME) || DEBUG)
+		if (NewsService.isNeedingToPullNews(this, MIN_GAP_TO_DISPLAY_NEWS, MAX_DISPLAY_NEWS_TIME))
 		{
 			Log.d(TAG, "Need to pull news");
             startTask(TalkQueryType.PUBNEWS);
@@ -352,7 +358,7 @@ public class TalkActivity extends SlidingFragmentActivity {
                 												 location, 
                 												 MIN_DISTANCE_TO_HOME, 
                 												 MIN_DISTANCE_TO_LAST_LOCATION); 
-                if (isNeed || DEBUG) {
+                if (isNeed) {
                 	startTask(TalkQueryType.PUBLOCATION);
                 }
             }
@@ -382,9 +388,14 @@ public class TalkActivity extends SlidingFragmentActivity {
 				ButtonProxy bp = (ButtonProxy)msg.obj;
 				mAskButton.setEnabled(bp.mIsEnable);
 			}
-			else if (msg.obj instanceof Exception)
+			else if (msg.obj instanceof IOException)
 			{
 				IOException reason = (IOException)msg.obj;
+				NotificationsUtil.ToastReasonForFailure(TalkActivity.this, reason);
+			}
+			else if (msg.obj instanceof Exception)
+			{
+				Exception reason = (Exception)msg.obj;
 				NotificationsUtil.ToastReasonForFailure(TalkActivity.this, reason);
 			}
 		}

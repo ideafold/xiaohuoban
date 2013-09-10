@@ -1,18 +1,3 @@
-/*
- * Zirco Browser for Android
- * 
- * Copyright (C) 2010 - 2012 J. Devauchelle and contributors.
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * version 3 as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- */
-
 package com.heibuddy.browser.ui.activities;
 
 import java.util.ArrayList;
@@ -71,7 +56,6 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.GestureDetector;
 import android.view.KeyEvent;
@@ -1148,12 +1132,20 @@ public class BrowserMainActivity extends SlidingFragmentActivity implements IToo
     	mCurrentWebView.doOnPause();
     	
     	synchronized (mViewFlipper) {
-    		mViewFlipper.removeViewAt(removeIndex);
-    		mViewFlipper.setDisplayedChild(removeIndex - 1);    		
-    		mWebViews.remove(removeIndex);    		
+    		try {
+    			mViewFlipper.removeViewAt(removeIndex);
+    			mViewFlipper.setDisplayedChild(removeIndex - 1);    		
+    			mWebViews.remove(removeIndex);
+    		}catch (Exception e) {
+    			return;
+            }
     	}
     	
-    	mCurrentWebView = mWebViews.get(mViewFlipper.getDisplayedChild());
+    	int index = mViewFlipper.getDisplayedChild();
+    	if (index < 0){
+    		return;
+    	}
+    	mCurrentWebView = mWebViews.get(index);
     	
     	updateUI();
     	updatePreviousNextTabViewsVisibility();

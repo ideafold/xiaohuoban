@@ -12,6 +12,7 @@ import org.xml.sax.XMLReader;
 import android.content.Context;
 import android.util.Log;
 
+import com.heibuddy.xiaohuoban.util.DesHelper;
 import com.heibuddy.xiaohuoban.util.NetworkHelper;
 import com.heibuddy.xiaohuoband.XiaohuobandSettings;
 import com.heibuddy.xiaohuoband.talk.BaseListItemEntity;
@@ -20,8 +21,10 @@ import com.heibuddy.xiaohuoband.talk.BaseSendEntity;
 public class TalkProxy {
     private static final String TAG = "NetUtil";
     private static final boolean DEBUG = XiaohuobandSettings.DEBUG;
-    
-    private static final String TALK_SERVER_URL = "http://42.121.52.246/xiaohuoban/"; 
+    private static final String TALK_SERVER_URL = "http://www.360island.com:8080/xiaohuoban/"; 
+    private static final String SECRET = "GZ9Gn2U5nhpea8hw";
+    private static final String IV = "70301000";
+    private static DesHelper.DESCrypto aesWrapper = new DesHelper.DESCrypto(SECRET, IV);
     
 	public synchronized static BaseListItemEntity sendMessage(BaseSendEntity msg, Context context) throws IOException
 	{
@@ -44,17 +47,37 @@ public class TalkProxy {
 			throw new IOException("Network unavailable");
         }
 		
-		//TODO
-//		sendXml = getExampleXML("post.xml",context);
-		
+		/*
+		String encryptedText = aesWrapper.encrypt(sendXml);
+		if (DEBUG){
+			Log.d(TAG, encryptedText);
+			Log.d(TAG, "length: " + encryptedText.length());
+			String decryptedText = aesWrapper.decrypt(encryptedText);
+			if (!decryptedText.equals(sendXml)){
+				Log.e(TAG, "decryptedText is not equal to input!!");
+			}
+		}
+		String res = NetworkHelper.sendRequestFromHttpClient(TalkProxy.TALK_SERVER_URL, encryptedText);
+		*/
 		String res = NetworkHelper.sendRequestFromHttpClient(TalkProxy.TALK_SERVER_URL, sendXml);
 		if (res == null)
 		{
 			Log.e(TAG, "response of sendRequestFromHttpClient is null!");
 			return null;
 		}
-		if (DEBUG) Log.d(TAG, "Recv content is " + res);
+
+		/*
+		String decryptedText = aesWrapper.decrypt(res);
+		if (decryptedText == null){
+			Log.e(TAG, "aesWrapper.decrypt return is null!");
+			return null;
+		}
+		decryptedText.replaceAll("\\.*UserName><!", "<xml><ToUserName><!");
 		
+		Log.d(TAG, "Recv content is " + decryptedText);
+		*/
+		
+		//return parseXML(decryptedText);
 		return parseXML(res);
 	}
 	

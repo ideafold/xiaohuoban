@@ -16,12 +16,10 @@ public class LandingActivity extends Activity {
         Xiaohuoband xd = (Xiaohuoband) getApplication();
         if (xd.isReady())
         {
-        	//Intent intent = new Intent(getApplicationContext(), TalkActivity.class);
         	Intent intent = new Intent(getApplicationContext(), TalkActivity.class);
             startActivity(intent); 
             finish();
         }
-        
         setContentView(R.layout.layout_landing);
         
         final Button register = (Button) findViewById(R.id.toolbar_button_sign_up);

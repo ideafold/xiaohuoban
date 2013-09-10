@@ -125,11 +125,11 @@ public class ArticleListItemEntity extends BaseListItemEntity {
 			{
 				imageInner.setImageBitmap(msgRecvListItemEntity.getBitmap());
 				imageInner.setVisibility(View.VISIBLE);
-				Log.d(TAG, "image VISIBLE: " + msgRecvListItemEntity.getPicUrl());
+				//Log.d(TAG, "image VISIBLE: " + msgRecvListItemEntity.getPicUrl());
 			}
 			else{
 				imageInner.setVisibility(View.GONE);
-				Log.d(TAG, "image GONE");
+				//Log.d(TAG, "image GONE");
 			}
 			
 			if (msgRecvListItemEntity.getUrl() == null || msgRecvListItemEntity.getUrl().equals(""))

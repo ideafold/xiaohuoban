@@ -2,26 +2,17 @@ package com.heibuddy.xiaohuoband;
 
 import java.util.Date;
 
-import com.heibuddy.xiaohuoban.Xiaohuoban;
-import com.heibuddy.xiaohuoban.error.XiaohuobanException;
 import com.heibuddy.xiaohuoban.util.NotificationsUtil;
-import com.heibuddy.xiaohuoband.preferences.Preferences;
 import com.heibuddy.xiaohuoband.slidingmenuimp.SlidingMenuFragment;
 import com.heibuddy.xiaohuoband.talk.BaseListItemEntity;
-import com.heibuddy.xiaohuoband.talk.BaseSendEntity;
 import com.heibuddy.xiaohuoband.talk.SimpleAnswerItemEntity;
 import com.heibuddy.xiaohuoband.talk.TeachMsgSendEntity;
 import com.heibuddy.xiaohuoband.talk.support.TalkProxy;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -31,7 +22,6 @@ import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.heibuddy.R;

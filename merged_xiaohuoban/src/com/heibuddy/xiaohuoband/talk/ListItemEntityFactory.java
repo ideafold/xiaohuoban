@@ -1,7 +1,5 @@
 package com.heibuddy.xiaohuoband.talk;
 
-import android.util.Log;
-
 public class ListItemEntityFactory
 {
 	public static BaseListItemEntity createLisItemEntity(final String msgType)
