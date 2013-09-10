@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<xml>
-	<ToUserName><![CDATA[toUser_Tab1RecvText]]></ToUserName>
-	<FromUserName><![CDATA[fromUser_Tab1RecvText]]></FromUserName> 
-	<CreateTime>1376879122</CreateTime>
-	<MsgType><![CDATA[pubText]]></MsgType>
-	<Content><![CDATA[网络连接失败，请检查网络]]></Content>
-	<Url><![CDATA[]]></Url>
-</xml>

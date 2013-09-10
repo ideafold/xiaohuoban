@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<xml>
-	<ToUserName><![CDATA[toUser_Tab1RecvText]]></ToUserName>
-	<FromUserName><![CDATA[fromUser_Tab1RecvText]]></FromUserName> 
-	<CreateTime>1376879122</CreateTime>
-	<MsgType><![CDATA[pubText]]></MsgType>
-	<Content><![CDATA[这是应答的文本数据,点击进入WebView页面m.baidu.com]]></Content>
-	<Url><![CDATA[http://m.baidu.com]]></Url>
-</xml>
