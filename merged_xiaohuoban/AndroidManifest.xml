@@ -4,7 +4,7 @@
       android:installLocation="auto"
       android:versionName="0.4.4" android:versionCode="18">
       
-    <uses-sdk android:minSdkVersion="13" android:targetSdkVersion="18" />
+    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="18" />
     
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>	
 <uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS"></uses-permission>	
@@ -25,7 +25,7 @@
      android:icon="@drawable/icon"
      android:label="@string/ApplicationName"
         android:name="com.heibuddy.xiaohuoband.Xiaohuoband"
-        android:theme="@android:style/Theme.Holo.Light.NoActionBar">
+        android:theme="@style/Theme.Sherlock.Light.NoActionBar">
         
         <activity
             android:name="com.heibuddy.xiaohuoband.LandingActivity"
@@ -39,7 +39,7 @@
         <activity
             android:name="com.heibuddy.xiaohuoband.TeachActivity"
             android:launchMode="singleTask"
-            android:theme="@android:style/Theme.Holo.Light"
+            android:theme="@style/Theme.Sherlock.Light.NoActionBar"
             android:screenOrientation="portrait">
         </activity>
         
