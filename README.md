@@ -19,7 +19,6 @@ repo 地址：https://github.com/ideafold/xiaohuoban
 3. 导入merged_xiaohuoban，点击merged_xiaohuoban项目的Properties, 选择“Android”，点击“add”把actionbarsherlock和slidingmenu_lib加进来。
 
 
-### 此android客户端开发计划：
-1. 解决掉你发现的bug, 现在知道的bug包括：你早上说的问题， 浏览器打开youku.com时，点击部分视频无反应。
-2. 优化浏览器，例如，双击浏览器的地址输入栏时，
-如果地址栏内有url，双击后，url应该处于全选状态。
+### 计划：
+1. 解决发现的bug
+2. 优化客户端
