@@ -64,7 +64,7 @@ public class RegisterActivity extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-        ((Xiaohuoband) getApplication()).requestLocationUpdates(false);
+        ((Xiaohuoband) getApplication()).requestLocationUpdates();
     }
 
     @Override

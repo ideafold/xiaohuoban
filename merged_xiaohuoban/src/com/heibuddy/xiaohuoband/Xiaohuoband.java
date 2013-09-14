@@ -1,10 +1,14 @@
 package com.heibuddy.xiaohuoband;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.heibuddy.xiaohuoban.Xiaohuoban;
-import com.heibuddy.xiaohuoband.error.LocationException;
-import com.heibuddy.xiaohuoband.location.BestLocationListener;
+import com.heibuddy.xiaohuoband.location.CopyOfBestLocationListener;
 import com.heibuddy.xiaohuoband.preferences.Preferences;
 import com.heibuddy.xiaohuoban.util.JavaLoggingHandler;
+import com.heibuddy.xiaohuoban.util.LocationService;
+import com.heibuddy.xiaohuoban.util.LocationService.HuobanLocationType;
 import com.heibuddy.xiaohuoban.util.NullDiskCache;
 import com.heibuddy.xiaohuoban.util.RemoteResourceManager;
 
@@ -17,8 +21,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
@@ -55,9 +57,10 @@ public class Xiaohuoband extends Application {
 
     private Xiaohuoban mXiaohuoban;
 
-    private BestLocationListener mBestLocationListener = new BestLocationListener();
-    
     private boolean mIsFirstRun;
+    
+    // 百度定位
+    private LocationClient mLocationClient;
     
     @Override
     public void onCreate() {
@@ -91,7 +94,73 @@ public class Xiaohuoband extends Application {
 
         // produce a Xiaohuoban instance
         loadXiaohuoban();
+        
+        // 百度定位
+        mLocationClient = new LocationClient(this);
+        mLocationListener = new CopyOfBestLocationListener(this);
+        LocationClientOption option = new LocationClientOption();
+        option.setOpenGps(true);
+        option.setAddrType("all");//返回的定位结果包含地址信息
+//        option.setCoorType("bd09ll");//返回的定位结果是百度经纬度,默认值gcj02
+        option.setScanSpan(1000 * 60 * 5);//设置发起定位请求的间隔时间为5m
+        option.disableCache(true);//禁止启用缓存定位
+        option.setPoiNumber(5);	//最多返回POI个数
+        option.setPoiDistance(1000); //poi查询距离
+        option.setPoiExtraInfo(true); //是否需要POI的电话和地址等详细信息 
+        mLocationClient.setLocOption(option);
+		mLocationClient.registerLocationListener(mLocationListener);
+		mLocationClient.start();
     }
+    
+    // --- location start
+    
+    CopyOfBestLocationListener mLocationListener;
+
+    public void requestLocationUpdates(){
+    	requestLocationUpdates(null);
+    }
+    
+    public void requestLocationUpdates(Observer o){
+    	if(o != null || mLocationListener != null){
+    		mLocationListener.addObserver(o);
+    	}
+    	int result = mLocationClient.requestLocation();
+    	String resultMsg = null;
+    	switch (result) {
+    	/*
+    	 *     0：正常发起了定位。1：服务没有启动。2：没有监听函数。6：请求间隔过短。 前后两次请求定位时间间隔不能小于1000ms。 
+    	 */
+		case 0:
+			resultMsg = "正常发起了定位。";
+			break;
+		case 1:
+			resultMsg = "服务没有启动。";
+			break;
+		case 2:
+			resultMsg = "没有监听函数。";
+			break;
+		case 6:
+			resultMsg = "请求间隔过短。 前后两次请求定位时间间隔不能小于1000ms。 ";
+			break;
+		}
+        Log.d(TAG, "requestLocationUpdates result : " + resultMsg);
+    }
+
+    public void removeLocationUpdates(){
+    	removeLocationUpdates(null);
+    }
+    public void removeLocationUpdates(Observer o){
+    	if(o != null || mLocationListener != null){
+        	mLocationListener.deleteObserver(o);
+    	}
+    }
+
+	public BDLocation getLastKnownLocation() {
+		return mLocationClient.getLastKnownLocation();
+		//BDLocation last = LocationService.getLocationFromPreferencesDB(this, HuobanLocationType.LAST_VALID);
+		//return last;
+	}
+    // --- location end
 
     public static Xiaohuoband getAppContext() {
         return Xiaohuoband.sInstance;
@@ -128,45 +197,6 @@ public class Xiaohuoband extends Application {
     
     public RemoteResourceManager getRemoteResourceManager() {
         return mRemoteResourceManager;
-    }
-
-    public BestLocationListener requestLocationUpdates(boolean gps) {
-        mBestLocationListener.register(
-                (LocationManager) getSystemService(Context.LOCATION_SERVICE), gps);
-        return mBestLocationListener;
-    }
-
-    public BestLocationListener requestLocationUpdates(Observer observer) {
-        mBestLocationListener.addObserver(observer);
-        mBestLocationListener.register(
-                (LocationManager) getSystemService(Context.LOCATION_SERVICE), true);
-        return mBestLocationListener;
-    }
-
-    public void removeLocationUpdates() {
-        mBestLocationListener
-                .unregister((LocationManager) getSystemService(Context.LOCATION_SERVICE));
-    }
-
-    public void removeLocationUpdates(Observer observer) {
-        mBestLocationListener.deleteObserver(observer);
-        this.removeLocationUpdates();
-    }
-
-    public Location getLastKnownLocation() {
-        return mBestLocationListener.getLastKnownLocation();
-    }
-
-    public Location getLastKnownLocationOrThrow() throws LocationException {
-        Location location = mBestLocationListener.getLastKnownLocation();
-        if (location == null) {
-            throw new LocationException();
-        }
-        return location;
-    }
-    
-    public void clearLastKnownLocation() {
-        mBestLocationListener.clearLastKnownLocation();
     }
 
     public void requestStartService() {

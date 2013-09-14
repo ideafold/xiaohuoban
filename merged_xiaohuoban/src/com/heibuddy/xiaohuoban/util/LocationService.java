@@ -1,12 +1,12 @@
 package com.heibuddy.xiaohuoban.util;
 
+import com.baidu.location.BDLocation;
 import com.heibuddy.xiaohuoband.XiaohuobandSettings;
 
 import android.content.Context;
-import android.location.Location;
-import android.location.LocationManager;
 import android.util.Log;
 import android.content.SharedPreferences;
+import android.location.Location;
 
 public class LocationService
 {
@@ -22,7 +22,7 @@ public class LocationService
 	public static final String LAST_VALID_LOCAITON_LON = "lastValidAddrLon";
 	public static final String LAST_VALID_LOCAITON_LAT = "lastValidAddrLat";	
 
-	public static boolean isGoingFarAway(Context context, Location location, float minDistanceToHome, float minDistanceToLastLocation)
+	public static boolean isGoingFarAway(Context context, BDLocation location, float minDistanceToHome, float minDistanceToLastLocation)
 	{
 		float distance = 0.00f;
 		distance = getDistanceToResidentLocation(context, location);
@@ -55,24 +55,33 @@ public class LocationService
 		return true;
 	}
 	
-	public static float getDistanceToLastValidLocation(Context context, Location currentLocation){
+	public static float getDistanceToLastValidLocation(Context context, BDLocation currentLocation){
 		//retrieval the last valid location from SharedPreferences db
-		Location lastValidAddr = getLocationFromPreferencesDB(context, HuobanLocationType.LAST_VALID);
-		return currentLocation.distanceTo(lastValidAddr);
+		BDLocation lastValidAddr = getLocationFromPreferencesDB(context, HuobanLocationType.LAST_VALID);
+		return distanceTo(currentLocation, lastValidAddr);
 	}
 
-	public static float getDistanceToResidentLocation(Context context, Location currentLocation){
+	public static float getDistanceToResidentLocation(Context context, BDLocation currentLocation){
 		//retrieval the resident location from SharedPreferences db
-		Location resident = getLocationFromPreferencesDB(context, HuobanLocationType.RESIDENT);
-		return currentLocation.distanceTo(resident);
+		BDLocation resident = getLocationFromPreferencesDB(context, HuobanLocationType.RESIDENT);
+		return distanceTo(currentLocation, resident);
 	}	
 	
-	public static boolean updateLastValidLocationToPreferencesDB(Context context, Location location)
+	private static float distanceTo(BDLocation from, BDLocation to){
+		if(from != null || to != null){
+			float[] results=new float[1]; 
+			Location.distanceBetween(from.getLatitude(), from.getLongitude(), to.getLatitude(), to.getLongitude(), results);
+			return results[0];
+		}
+		return -1;
+	}
+	
+	public static boolean updateLastValidLocationToPreferencesDB(Context context, BDLocation location)
 	{
 		return storeLocationToPreferencesDB(context, HuobanLocationType.LAST_VALID, location);
 	}
 	
-	public static boolean storeLocationToPreferencesDB(Context context, HuobanLocationType type, Location location)
+	public static boolean storeLocationToPreferencesDB(Context context, HuobanLocationType type, BDLocation location)
 	{
 		SharedPreferences settings = context.getSharedPreferences(SETTING_INFOS, 0);
 		SharedPreferences.Editor editor = settings.edit();
@@ -97,7 +106,7 @@ public class LocationService
 		return true;
 	}	
 	
-	public static Location getLocationFromPreferencesDB(Context context, HuobanLocationType type)
+	public static BDLocation getLocationFromPreferencesDB(Context context, HuobanLocationType type)
 	{
 		SharedPreferences settings = context.getSharedPreferences(SETTING_INFOS, 0);
 		float lon = 0.0f;
@@ -112,9 +121,8 @@ public class LocationService
 			lon = settings.getFloat(LAST_VALID_LOCAITON_LON, 0.0f);
 			lat = settings.getFloat(LAST_VALID_LOCAITON_LAT, 0.0f);
 		}
+		BDLocation location = new BDLocation();
 		
-		LocationManager mgr = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        Location location = mgr.getLastKnownLocation("network");
         if (lon < 0.01f && lat < 0.01f)
         {
         	if (DEBUG)

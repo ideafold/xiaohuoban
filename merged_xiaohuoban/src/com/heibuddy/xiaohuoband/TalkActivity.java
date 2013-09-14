@@ -15,7 +15,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
-import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -31,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
+import com.baidu.location.BDLocation;
 import com.heibuddy.xiaohuoband.slidingmenuimp.SlidingMenuFragment;
 import com.heibuddy.xiaohuoband.talk.autocomplete.SuggestObject;
 import com.heibuddy.xiaohuoband.talk.autocomplete.BackButtonPressedEventListener;
@@ -41,7 +41,6 @@ import com.heibuddy.xiaohuoban.error.XiaohuobanException;
 import com.heibuddy.xiaohuoban.util.LocationService;
 import com.heibuddy.xiaohuoban.util.NewsService;
 import com.heibuddy.xiaohuoban.util.NotificationsUtil;
-import com.heibuddy.xiaohuoband.location.BestLocationListener;
 import com.heibuddy.xiaohuoband.talk.ArticleListItemEntity;
 import com.heibuddy.xiaohuoband.talk.BaseSendEntity;
 import com.heibuddy.xiaohuoband.talk.ListItemAdapter;
@@ -348,10 +347,9 @@ public class TalkActivity extends SlidingFragmentActivity {
 
         @Override
         public void update(Observable observable, Object data) {
-            Location location = (Location) data;
+            BDLocation location = (BDLocation) data;
             // Fire a search if we haven't done so yet.
-            if (!mRequestedFirstSearch
-                    && ((BestLocationListener) observable).isAccurateEnough(location)) {
+            if (!mRequestedFirstSearch) {
                 mRequestedFirstSearch = true;
                 
                 boolean isNeed = LocationService.isGoingFarAway((Xiaohuoband) getApplication(), 
@@ -460,7 +458,7 @@ public class TalkActivity extends SlidingFragmentActivity {
 
         private LocationMsgSendEntity getLocationMsgInstance(String fromUserName, long now, String userId){
 			// Get last known location.
-            Location location = ((Xiaohuoband) mActivity.getApplication()).getLastKnownLocation();
+            BDLocation location = ((Xiaohuoband) mActivity.getApplication()).getLastKnownLocation();
             if (location == null) {
             	mReason = new XiaohuobanException("No location!");
             	return null;
@@ -532,7 +530,7 @@ public class TalkActivity extends SlidingFragmentActivity {
                 }
                 else if (mQueryType == TalkQueryType.PUBLOCATION)
                 {
-                	Location location = ((Xiaohuoband) mActivity.getApplication()).getLastKnownLocation();
+                	BDLocation location = ((Xiaohuoband) mActivity.getApplication()).getLastKnownLocation();
                     if (location == null) {
                     	mReason = new XiaohuobanException("No location!");
                     	return;

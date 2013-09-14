@@ -79,7 +79,7 @@ public class TeachActivity extends SlidingFragmentActivity {
     @Override
     public void onResume() {
         super.onResume();
-        ((Xiaohuoband) getApplication()).requestLocationUpdates(false);
+        ((Xiaohuoband) getApplication()).requestLocationUpdates();
     }
 
     @Override
