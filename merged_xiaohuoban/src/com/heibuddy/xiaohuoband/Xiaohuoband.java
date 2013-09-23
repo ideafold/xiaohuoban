@@ -121,7 +121,7 @@ public class Xiaohuoband extends Application {
     }
     
     public void requestLocationUpdates(Observer o){
-    	if(o != null || mLocationListener != null){
+    	if(o != null && mLocationListener != null){
     		mLocationListener.addObserver(o);
     	}
     	int result = mLocationClient.requestLocation();
