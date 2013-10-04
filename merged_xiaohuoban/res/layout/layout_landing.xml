@@ -14,7 +14,7 @@
         android:layout_marginTop="-70dp"
         android:layout_marginLeft="0dip"
         android:layout_marginRight="0dip"
-        android:src="@drawable/welcome_photos" />
+        android:src="@drawable/welcome_photos" android:contentDescription="@drawable/welcome_photos"/>
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -50,6 +50,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:paddingBottom="160.0dip"
-        android:src="@drawable/welcome_branding" />
+        android:src="@drawable/welcome_branding" android:contentDescription="@drawable/welcome_photos" />
 
 </FrameLayout>
