@@ -86,6 +86,7 @@ public class CustomWebView extends WebView {
 	/**
 	 * Initialize the WebView with the options set by the user through preferences.
 	 */
+	@SuppressWarnings("deprecation")
 	public void initializeOptions() {
 		WebSettings settings = getSettings();
 		
@@ -100,12 +101,16 @@ public class CustomWebView extends WebView {
 		settings.setUserAgentString(Controller.getInstance().getPreferences().getString(Constants.PREFERENCES_BROWSER_USER_AGENT, Constants.USER_AGENT_DEFAULT));
 		
 		CookieManager.getInstance().setAcceptCookie(Controller.getInstance().getPreferences().getBoolean(Constants.PREFERENCES_BROWSER_ENABLE_COOKIES, true));
-		
+
+		//TODO
+		/*
 		if (Build.VERSION.SDK_INT <= 7) {
 			settings.setPluginsEnabled(Controller.getInstance().getPreferences().getBoolean(Constants.PREFERENCES_BROWSER_ENABLE_PLUGINS_ECLAIR, true));
 		} else {
 			settings.setPluginState(PluginState.valueOf(Controller.getInstance().getPreferences().getString(Constants.PREFERENCES_BROWSER_ENABLE_PLUGINS, PluginState.ON_DEMAND.toString())));
 		}
+		*/
+		settings.setPluginState(PluginState.valueOf(Controller.getInstance().getPreferences().getString(Constants.PREFERENCES_BROWSER_ENABLE_PLUGINS, PluginState.ON_DEMAND.toString())));
 		
 		settings.setSupportZoom(true);
 		

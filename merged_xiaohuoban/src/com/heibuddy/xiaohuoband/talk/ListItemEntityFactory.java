@@ -1,8 +1,10 @@
 package com.heibuddy.xiaohuoband.talk;
 
+import android.content.Context;
+
 public class ListItemEntityFactory
 {
-	public static BaseListItemEntity createLisItemEntity(final String msgType)
+	public static BaseListItemEntity createLisItemEntity(final String msgType, Context context)
 	{
 		ListItemEntityType type =  mapMsgTypeToListItemType(msgType);
 		if (type == ListItemEntityType.SIMPLE_ANSWER_ENTITY)
@@ -11,7 +13,7 @@ public class ListItemEntityFactory
 		}
 		if (type == ListItemEntityType.ARTICLE_LIST_ENTITY)
 		{
-			return new ArticleListItemEntity();
+			return new ArticleListItemEntity(context);
 		}
 		
 		return null;

@@ -7,12 +7,10 @@ import com.heibuddy.xiaohuoban.Xiaohuoban;
 import com.heibuddy.xiaohuoband.location.CopyOfBestLocationListener;
 import com.heibuddy.xiaohuoband.preferences.Preferences;
 import com.heibuddy.xiaohuoban.util.JavaLoggingHandler;
-import com.heibuddy.xiaohuoban.util.LocationService;
-import com.heibuddy.xiaohuoban.util.LocationService.HuobanLocationType;
 import com.heibuddy.xiaohuoban.util.NullDiskCache;
 import com.heibuddy.xiaohuoban.util.RemoteResourceManager;
+import com.iiseeuu.asyncimage.GDApplication;
 
-import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -34,7 +32,7 @@ import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Xiaohuoband extends Application {
+public class Xiaohuoband extends GDApplication {
     private static final String TAG = "Xiaohuoband";
     private static final boolean DEBUG = XiaohuobandSettings.DEBUG;
     static {
@@ -206,6 +204,11 @@ public class Xiaohuoband extends Application {
     public void requestUpdateUser() {
         mTaskHandler.sendEmptyMessage(TaskHandler.MESSAGE_UPDATE_USER);
     }
+    
+    @Override  
+    public void onLowMemory() {  
+    	super.onLowMemory();  
+    }  
 
     private void loadXiaohuoban() {
         // Try logging in and setting up xiaohuoban oauth, then user

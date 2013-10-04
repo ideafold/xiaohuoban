@@ -36,10 +36,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
-            android:background="#aaa"
             android:padding="2dp" >
 
-            <ImageView
+            <com.iiseeuu.asyncimage.widget.AsyncImageView
                 android:id="@+id/image_inner"
                 android:layout_width="80.0dip"
                 android:layout_height="80.0dip"
@@ -47,7 +46,8 @@
                 android:layout_centerVertical="true"
                 android:scaleType="centerCrop"
                 android:visibility="visible"
-                android:src="@drawable/welcome_photos" />
+                android:background="@drawable/abs__spinner_48_inner_holo" 
+                android:src="@drawable/abs__spinner_48_inner_holo" />
         </RelativeLayout>
 
         <LinearLayout

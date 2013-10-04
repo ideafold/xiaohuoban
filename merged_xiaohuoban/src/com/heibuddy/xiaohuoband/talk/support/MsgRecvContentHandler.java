@@ -8,6 +8,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.heibuddy.xiaohuoband.XiaohuobandSettings;
@@ -132,8 +133,8 @@ public class MsgRecvContentHandler extends DefaultHandler {
 		mBuffer.append(new String(ch, start, length));
 	}
 
-	public BaseListItemEntity getData(){
-		BaseListItemEntity entity = ListItemEntityFactory.createLisItemEntity(mMsgType);
+	public BaseListItemEntity getData(Context context){
+		BaseListItemEntity entity = ListItemEntityFactory.createLisItemEntity(mMsgType, context);
 		if (entity == null)
 		{
 			Log.e(TAG, "Oops, unknown msgType: " + mMsgType);

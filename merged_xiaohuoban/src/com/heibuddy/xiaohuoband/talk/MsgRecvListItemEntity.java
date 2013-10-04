@@ -13,9 +13,11 @@ public class MsgRecvListItemEntity {
     
 	private String title;
 	private String description;
-	private String picUrl;
+	private String picUrl = null;
 	private String url;
-	private Bitmap bitmap;
+	private Bitmap bitmap = null;
+	
+	private boolean retrieving = false;
 	
 	public MsgRecvListItemEntity() {
 	}
@@ -26,15 +28,7 @@ public class MsgRecvListItemEntity {
 		this.description = description;
 		this.picUrl = picUrl;
 		this.url = url;
-		if (picUrl != null && (!picUrl.equals(""))){
-			try {
-				byte[] imgData = NetworkHelper.getImage(picUrl);
-				this.bitmap = BitmapFactory.decodeByteArray(imgData, 0, imgData.length);
-			} catch (Exception e) {
-				this.bitmap = null;
-				Log.e(TAG, e.toString());
-			}
-		}
+		//this.setPicUrl(this.picUrl);
 	}
 	
 	public String getTitle() {
@@ -57,17 +51,28 @@ public class MsgRecvListItemEntity {
 		return picUrl;
 	}
 	
-	public void setPicUrl(String picUrl) {
+	public void setPicUrl(final String picUrl) {
 		this.picUrl = picUrl;
+		/*
 		if (picUrl != null && (!picUrl.equals(""))){
-			try {
-				byte[] imgData = NetworkHelper.getImage(this.picUrl);
-				this.bitmap = BitmapFactory.decodeByteArray(imgData, 0, imgData.length);
-			} catch (Exception e) {
-				this.bitmap = null;
-				Log.e(TAG, e.toString());
+			if (!retrieving)
+			{
+				retrieving = true;
+				Thread retrievalThread = new Thread(new Runnable(){
+					public void run(){
+						try {
+							byte[] imgData = NetworkHelper.getImage(picUrl);
+							bitmap = BitmapFactory.decodeByteArray(imgData, 0, imgData.length);
+						} catch (Exception e) {
+							bitmap = null;
+							Log.e(TAG, e.toString());
+						}
+					}
+				});
+				retrievalThread.start();
 			}
 		}
+		*/
 	}
 	
 	public String getUrl() {

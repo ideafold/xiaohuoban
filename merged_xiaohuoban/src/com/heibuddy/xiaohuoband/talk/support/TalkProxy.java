@@ -78,7 +78,7 @@ public class TalkProxy {
 		*/
 		
 		//return parseXML(decryptedText);
-		return parseXML(res);
+		return parseXML(res, context);
 	}
 	
 	public static String getExampleXML(String fileName, Context context){
@@ -98,7 +98,7 @@ public class TalkProxy {
 		return result;
 	}
 	
-	public static BaseListItemEntity parseXML(String xmlString){
+	public static BaseListItemEntity parseXML(String xmlString, Context context){
 		BaseListItemEntity listItemEntity = null;
 		try{
 			//create a SAXParserFactory
@@ -111,7 +111,7 @@ public class TalkProxy {
 			
 			//do parse
 			reader.parse(new InputSource(new StringReader(xmlString)));
-			listItemEntity = msgRecvContentHandler.getData();
+			listItemEntity = msgRecvContentHandler.getData(context);
 		}
 		catch(Exception e){
 			Log.e(TAG, e.toString());
