@@ -56,8 +56,9 @@ public class TeachActivity extends SlidingFragmentActivity {
 		sm.setBehindOffsetRes(R.dimen.slidingmenu_offset);
 		sm.setFadeDegree(0.35f);
 		
-		this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		this.getSupportActionBar().setTitle(R.string.teach_label);
+		//TODO there exist bug in xiaomi one plus 4.04 android
+		//this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		//this.getSupportActionBar().setTitle(R.string.teach_label);
 		
 		// set the Behind View
 		setBehindContentView(R.layout.menu_frame);
